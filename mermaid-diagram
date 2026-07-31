@@ -1,54 +1,55 @@
-flowchart LR
-
-    subgraph SRC["Blinkit Production Systems"]
-        A1[Order History DB<br/>real transaction data]
-        A2[Product Catalog DB<br/>live inventory]
-        A3[AI Discovery Engine<br/>Classified Barrier Data<br/>Part 1 pipeline]
+flowchart TD
+    subgraph TOP[" "]
+        style TOP fill:none,stroke:none
+        A1["Order history DB<br/><sup>Real transaction data</sup>"]
+        A2["Product catalog DB<br/><sup>Live inventory</sup>"]
+        A3["AI discovery engine<br/><sup>Classified barrier data</sup>"]
     end
 
-    subgraph BATCH["Offline Batch Layer — Weekly, Active Users Only"]
-        B1[Occasion &amp; Adjacency<br/>Reasoning Job]
-        B2[(Precomputed<br/>Suggestion Store)]
-        B1 --> B2
-    end
-
-    subgraph SERVE["Live Serving Layer — Fast Lookup, No Live AI Calls"]
-        C1{Lookup Service}
-        C2[(Reassurance<br/>Template Engine)]
-        C3[Fallback Logic<br/>show nothing if<br/>no coherent match]
-        C2 --> C1
-        C3 --> C1
-        G[Guardrail Monitors<br/>latency, return rate,<br/>search relevance]
-        C1 -.-> G
-    end
-
-    subgraph APP["Blinkit App — Production Surfaces"]
-        D1[Search Results]
-        D2[Product Detail]
-        D3[Cart Review]
-        D4[Order Confirmation]
-        D1 --> D2 --> D4
-        D3 --> D4
-    end
+    B1["Occasion & adjacency<br/><sup>Weekly reasoning job</sup>"]
+    B2["Precomputed store<br/><sup>Suggestion cache</sup>"]
 
     A1 --> B1
     A2 --> B1
     A3 --> B1
+    B1 --> B2
+
+    subgraph LIVE_LAYER[" "]
+        style LIVE_LAYER fill:none,stroke:none
+        C2["Reassurance lines"]
+        C1{"Lookup service"}
+        C3["Fallback logic"]
+        C2 --> C1
+        C3 --> C1
+    end
 
     B2 --> C1
-    D1 -- query --> C1
-    D3 -- review --> C1
-    C1 -- suggestions + reassurance --> D1
-    C1 -- suggestions + reassurance --> D3
 
-    classDef src fill:#EAF2FF,stroke:#378ADD,color:#333
-    classDef batch fill:#FFF3D6,stroke:#EF9F27,color:#333
-    classDef serve fill:#E3F2EC,stroke:#1D9E75,color:#333
-    classDef app fill:#E8EEFB,stroke:#378ADD,color:#333
-    classDef guard fill:#FCE7E1,stroke:#D85A30,color:#333
+    G["Guardrails<br/><sup>Latency, returns</sup>"]
+    C1 -.-> G
 
-    class A1,A2,A3 src
-    class B1,B2 batch
-    class C1,C2,C3 serve
-    class D1,D2,D3,D4 app
+    subgraph APP["Blinkit app — production surfaces"]
+        D1["Search results"]
+        D3["Cart review"]
+        D2["Product detail"]
+        D4["Order confirmation"]
+
+        D1 --> D2
+        D3 --> D4
+        D2 --> D4
+    end
+
+    C1 --> D1
+    C1 --> D3
+
+    classDef batch fill:#1b4985,stroke:#0f2b54,color:#ffffff,font-weight:bold
+    classDef liveBox fill:#07593e,stroke:#043827,color:#ffffff,font-weight:bold
+    classDef liveDiamond fill:#05402d,stroke:#02291c,color:#ffffff,font-weight:bold
+    classDef guard fill:#7c2d12,stroke:#451a0a,color:#ffffff,font-weight:bold
+    classDef app fill:#3c3689,stroke:#262259,color:#ffffff,font-weight:bold
+
+    class A1,A2,A3,B1,B2 batch
+    class C2,C3 liveBox
+    class C1 liveDiamond
     class G guard
+    class D1,D2,D3,D4 app

@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Cpu, CheckCircle2, AlertCircle, Rocket, Layers, ShieldCheck, Database, RefreshCw, Zap, Award, Sparkles } from 'lucide-react'
+import { Cpu, CheckCircle2, AlertCircle, Rocket, Layers, ShieldCheck, Database, RefreshCw, Zap, Award, Sparkles, Server, Filter, Activity } from 'lucide-react'
 import { DEFAULT_MERMAID_CODE } from '../data/mermaidCode.js'
 import MermaidViewer from '../components/MermaidViewer.jsx'
 
@@ -41,6 +41,26 @@ export default function ArchitectureScreen() {
           <div className="w-full min-h-[460px] bg-white rounded-[12px] p-2 overflow-hidden">
             <MermaidViewer code={DEFAULT_MERMAID_CODE} />
           </div>
+
+          {/* Color Key / Legend Bar */}
+          <div className="flex flex-wrap items-center justify-center gap-4 pt-3 border-t border-line/60 text-xs">
+            <div className="flex items-center gap-1.5">
+              <span className="w-3 h-3 rounded-sm bg-[#1b4985] inline-block" />
+              <span className="font-semibold text-ink-mid">Data & batch</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="w-3 h-3 rounded-sm bg-[#07593e] inline-block" />
+              <span className="font-semibold text-ink-mid">Live serving</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="w-3 h-3 rounded-sm bg-[#7c2d12] inline-block" />
+              <span className="font-semibold text-ink-mid">Guardrail</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="w-3 h-3 rounded-sm bg-[#3c3689] inline-block" />
+              <span className="font-semibold text-ink-mid">App surfaces</span>
+            </div>
+          </div>
         </div>
 
         {/* ── 2. Block 1: Architecture — How It Works ── */}
@@ -50,70 +70,92 @@ export default function ArchitectureScreen() {
             <h2 className="text-[16px] font-bold text-ink">Architecture — How It Works</h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
-            {/* Blinkit Production Systems */}
-            <div className="bg-[#f6f3f2] p-3.5 rounded-[12px] border border-line flex flex-col gap-1.5">
-              <div className="flex items-center gap-2 text-ink font-bold text-[13px]">
-                <Database size={15} className="text-brand-green" />
-                <span>Blinkit Production Systems</span>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5">
+            {/* 1. Data Sources (blue) */}
+            <div className="bg-[#f0f4f9] p-3.5 rounded-[12px] border border-[#1b4985]/20 flex flex-col gap-1.5">
+              <div className="flex items-center gap-2 font-bold text-[13px] text-[#1b4985]">
+                <Database size={15} />
+                <span>Data Sources</span>
               </div>
               <p className="text-[11.5px] text-ink-mid leading-relaxed">
-                The engine draws from three real sources: Order History DB (actual transaction data), Product Catalog DB (live inventory), and classified barrier data from our AI Discovery Engine (Part 1's pipeline output).
+                Three real Blinkit systems feed the engine — the Order History DB (actual transaction data), the Product Catalog DB (live inventory), and classified barrier data from the AI Discovery Engine (Part 1 pipeline).
               </p>
             </div>
 
-            {/* Offline Batch Layer */}
-            <div className="bg-[#f6f3f2] p-3.5 rounded-[12px] border border-line flex flex-col gap-1.5">
-              <div className="flex items-center gap-2 text-ink font-bold text-[13px]">
-                <RefreshCw size={15} className="text-brand-yellow-deep" />
-                <span>Offline Batch Layer</span>
+            {/* 2. Occasion & Adjacency Reasoning Job (blue) */}
+            <div className="bg-[#f0f4f9] p-3.5 rounded-[12px] border border-[#1b4985]/20 flex flex-col gap-1.5">
+              <div className="flex items-center gap-2 font-bold text-[13px] text-[#1b4985]">
+                <RefreshCw size={15} />
+                <span>Occasion & Adjacency Job</span>
               </div>
               <p className="text-[11.5px] text-ink-mid leading-relaxed">
-                Runs weekly, scoped only to users active that week — this keeps the reasoning step cheap and fast, since it never runs live against every request.
+                Runs weekly, offline, scoped only to users active that week. This is where actual AI reasoning happens — matching user habits to one relevant, unexplored category using occasion-based logic, not random swaps.
               </p>
             </div>
 
-            {/* Live Serving Layer */}
-            <div className="bg-[#f6f3f2] p-3.5 rounded-[12px] border border-line flex flex-col gap-1.5">
-              <div className="flex items-center gap-2 text-ink font-bold text-[13px]">
-                <Zap size={15} className="text-accent-blue" />
-                <span>Live Serving Layer</span>
+            {/* 3. Precomputed Store (blue) */}
+            <div className="bg-[#f0f4f9] p-3.5 rounded-[12px] border border-[#1b4985]/20 flex flex-col gap-1.5">
+              <div className="flex items-center gap-2 font-bold text-[13px] text-[#1b4985]">
+                <Server size={15} />
+                <span>Precomputed Store</span>
               </div>
               <p className="text-[11.5px] text-ink-mid leading-relaxed">
-                When a user searches or reaches checkout, the app does a fast lookup against the precomputed results — no live AI call sits in this path, which is what keeps response times near-instant.
+                The output of that weekly job — a ready-made suggestion sitting in wait for each eligible user, so nothing needs to be calculated live during shopping sessions.
               </p>
             </div>
 
-            {/* Reassurance & Fallback Logic */}
-            <div className="bg-[#f6f3f2] p-3.5 rounded-[12px] border border-line flex flex-col gap-1.5">
-              <div className="flex items-center gap-2 text-ink font-bold text-[13px]">
-                <ShieldCheck size={15} className="text-brand-green" />
-                <span>Reassurance & Fallback Logic</span>
+            {/* 4. Lookup Service (teal) */}
+            <div className="bg-[#edf7f3] p-3.5 rounded-[12px] border border-[#07593e]/20 flex flex-col gap-1.5">
+              <div className="flex items-center gap-2 font-bold text-[13px] text-[#07593e]">
+                <Zap size={15} />
+                <span>Lookup Service</span>
               </div>
               <p className="text-[11.5px] text-ink-mid leading-relaxed">
-                Every suggested item carries a reassurance line grounded in real classified barrier data for that category (trust, price, or authenticity) — never a generic or invented claim. If no genuinely relevant suggestion exists for a search, the system shows nothing rather than an unrelated item.
+                The only part of the system that runs live. When a real user searches or reaches checkout, this simply retrieves the already-computed suggestion — a fast database read, keeping response time near-instant.
               </p>
             </div>
 
-            {/* App Layer */}
-            <div className="bg-[#f6f3f2] p-3.5 rounded-[12px] border border-line flex flex-col gap-1.5">
-              <div className="flex items-center gap-2 text-ink font-bold text-[13px]">
-                <Layers size={15} className="text-brand-green" />
-                <span>App Layer</span>
+            {/* 5. Reassurance Lines (teal) */}
+            <div className="bg-[#edf7f3] p-3.5 rounded-[12px] border border-[#07593e]/20 flex flex-col gap-1.5">
+              <div className="flex items-center gap-2 font-bold text-[13px] text-[#07593e]">
+                <ShieldCheck size={15} />
+                <span>Reassurance Lines</span>
               </div>
               <p className="text-[11.5px] text-ink-mid leading-relaxed">
-                Search results, product detail, cart review, and order confirmation all read from the same lookup service — these are Blinkit's actual production surfaces, not a separate demo environment.
+                Paired with every retrieved suggestion — a line grounded in real classified barrier data about that category's actual blocker (trust, price, or authenticity), never invented.
               </p>
             </div>
 
-            {/* Guardrails */}
-            <div className="bg-[#f6f3f2] p-3.5 rounded-[12px] border border-line flex flex-col gap-1.5">
-              <div className="flex items-center gap-2 text-ink font-bold text-[13px]">
-                <Award size={15} className="text-accent-orange" />
+            {/* 6. Fallback Logic (teal) */}
+            <div className="bg-[#edf7f3] p-3.5 rounded-[12px] border border-[#07593e]/20 flex flex-col gap-1.5">
+              <div className="flex items-center gap-2 font-bold text-[13px] text-[#07593e]">
+                <Filter size={15} />
+                <span>Fallback Logic</span>
+              </div>
+              <p className="text-[11.5px] text-ink-mid leading-relaxed">
+                If nothing genuinely relevant was precomputed for a user, this decides the outcome — surface something coherent from a related category, or show nothing at all. An incoherent suggestion is never allowed.
+              </p>
+            </div>
+
+            {/* 7. Guardrails (coral) */}
+            <div className="bg-[#fdf2ee] p-3.5 rounded-[12px] border border-[#7c2d12]/20 flex flex-col gap-1.5">
+              <div className="flex items-center gap-2 font-bold text-[13px] text-[#7c2d12]">
+                <Activity size={15} />
                 <span>Guardrails</span>
               </div>
               <p className="text-[11.5px] text-ink-mid leading-relaxed">
-                Latency, return rate, and search relevance are monitored continuously to make sure the mechanism never degrades the core shopping experience.
+                Monitor the Lookup Service continuously — latency, return rate, and search relevance must stay within bounds, so the mechanism never costs more than it earns.
+              </p>
+            </div>
+
+            {/* 8. App Surfaces (purple) */}
+            <div className="bg-[#f1f0fb] p-3.5 rounded-[12px] border border-[#3c3689]/20 flex flex-col gap-1.5">
+              <div className="flex items-center gap-2 font-bold text-[13px] text-[#3c3689]">
+                <Layers size={15} />
+                <span>App Surfaces</span>
+              </div>
+              <p className="text-[11.5px] text-ink-mid leading-relaxed">
+                The Lookup Service serves exactly two entry points — Search Results and Cart Review — which lead into Product Detail and Order Confirmation respectively, both converging at Order Confirmation once a purchase completes.
               </p>
             </div>
           </div>
@@ -215,11 +257,11 @@ export default function ArchitectureScreen() {
 
         {/* ── 4. Block 3: Current Version (Phase 1) & Out-of-Scope ── */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* Current Version (Phase 1) */}
+          {/* Current Version (Phase 1 — as built in this MVP) */}
           <div className="bg-surface rounded-[16px] border border-line p-5 shadow-sm flex flex-col gap-3">
             <div className="flex items-center gap-2 border-b border-line pb-3">
               <CheckCircle2 size={18} className="text-brand-green" />
-              <h2 className="text-[15px] font-bold text-ink">Current Version (Phase 1)</h2>
+              <h2 className="text-[15px] font-bold text-ink">Current Version (Phase 1 — as built in this MVP)</h2>
             </div>
             <ul className="flex flex-col gap-2.5">
               <li className="flex items-start gap-2 text-[12px] text-ink-mid leading-snug">
@@ -228,15 +270,23 @@ export default function ArchitectureScreen() {
               </li>
               <li className="flex items-start gap-2 text-[12px] text-ink-mid leading-snug">
                 <span className="w-1.5 h-1.5 rounded-full bg-brand-green mt-1.5 flex-shrink-0" />
-                <span>Occasion-based matching across curated example categories, with a fallback rule for anything else</span>
+                <span>Occasion-based matching across four curated example searches, with category-level fallback for anything else</span>
               </li>
               <li className="flex items-start gap-2 text-[12px] text-ink-mid leading-snug">
                 <span className="w-1.5 h-1.5 rounded-full bg-brand-green mt-1.5 flex-shrink-0" />
-                <span>Reassurance lines grounded in real classified barrier data, never generic or fabricated</span>
+                <span>Fallback shows nothing rather than an incoherent suggestion — a wrong suggestion is worse than none</span>
               </li>
               <li className="flex items-start gap-2 text-[12px] text-ink-mid leading-snug">
                 <span className="w-1.5 h-1.5 rounded-full bg-brand-green mt-1.5 flex-shrink-0" />
-                <span>Runs entirely against real Blinkit systems — order history, product catalog, and the existing AI classification pipeline</span>
+                <span>Three selectable personas demonstrate how the mechanism adapts to different purchase histories</span>
+              </li>
+              <li className="flex items-start gap-2 text-[12px] text-ink-mid leading-snug">
+                <span className="w-1.5 h-1.5 rounded-full bg-brand-green mt-1.5 flex-shrink-0" />
+                <span>"Why you're seeing this" panel shows two grounded reasons — a cohort pattern and a real category trust stat — plus a one-tap opt-out</span>
+              </li>
+              <li className="flex items-start gap-2 text-[12px] text-ink-mid leading-snug">
+                <span className="w-1.5 h-1.5 rounded-full bg-brand-green mt-1.5 flex-shrink-0" />
+                <span>Every search screen shows 5-6 real product results alongside 2-3 RDE suggestions, so the app feels fully populated</span>
               </li>
             </ul>
           </div>
@@ -254,7 +304,11 @@ export default function ArchitectureScreen() {
               </li>
               <li className="flex items-start gap-2 text-[12px] text-ink-mid leading-snug">
                 <span className="w-1.5 h-1.5 rounded-full bg-accent-red mt-1.5 flex-shrink-0" />
-                <span>No feedback-loop retraining — the reasoning logic doesn't yet learn from accept/ignore signals over time</span>
+                <span>No feedback-loop retraining — suggestions don't yet learn from accept/ignore signals over time</span>
+              </li>
+              <li className="flex items-start gap-2 text-[12px] text-ink-mid leading-snug">
+                <span className="w-1.5 h-1.5 rounded-full bg-accent-red mt-1.5 flex-shrink-0" />
+                <span>No real backend integration — purchase history and product data are mocked for this demo; the architecture above shows how that connection would work in production</span>
               </li>
               <li className="flex items-start gap-2 text-[12px] text-ink-mid leading-snug">
                 <span className="w-1.5 h-1.5 rounded-full bg-accent-red mt-1.5 flex-shrink-0" />
@@ -270,12 +324,12 @@ export default function ArchitectureScreen() {
             <Rocket size={18} className="text-accent-blue" />
             <h2 className="text-[15px] font-bold text-ink">Future Scope</h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 pt-1">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 pt-1">
             <div className="bg-accent-blue-tint/40 p-3.5 rounded-[12px] border border-accent-blue/20 flex flex-col gap-1.5">
               <span className="text-[11px] font-extrabold text-accent-blue uppercase tracking-wider">Phase 2</span>
               <p className="text-[12.5px] text-ink font-bold leading-tight">Life-Event & Pattern-Change Detection</p>
               <p className="text-[11.5px] text-ink-mid leading-relaxed">
-                The engine proactively surfaces relevant categories around real behavior shifts, not just active searches.
+                Recognizing first-time signals around major life events and behavior shifts.
               </p>
             </div>
 
@@ -283,7 +337,15 @@ export default function ArchitectureScreen() {
               <span className="text-[11px] font-extrabold text-brand-green uppercase tracking-wider">Phase 3</span>
               <p className="text-[12.5px] text-ink font-bold leading-tight">Feedback-Loop Tuning</p>
               <p className="text-[11.5px] text-ink-mid leading-relaxed">
-                Accept/ignore/purchase signals continuously refine which suggestions actually convert per user segment.
+                Continuously tuning suggestions based on real-time accept/ignore signals over time.
+              </p>
+            </div>
+
+            <div className="bg-brand-yellow-tint/40 p-3.5 rounded-[12px] border border-brand-yellow-deep/20 flex flex-col gap-1.5">
+              <span className="text-[11px] font-extrabold text-brand-yellow-deep uppercase tracking-wider">Production</span>
+              <p className="text-[12.5px] text-ink font-bold leading-tight">Full Production Integration</p>
+              <p className="text-[11.5px] text-ink-mid leading-relaxed">
+                Replacing mocked data structures with live, production Blinkit databases and serving systems.
               </p>
             </div>
           </div>
@@ -292,3 +354,4 @@ export default function ArchitectureScreen() {
     </div>
   )
 }
+
