@@ -55,16 +55,6 @@ const DEMO_SEARCHES = [
     badgeBg: '#fff9e0',
     badgeColor: '#d97706',
   },
-  {
-    query: 'shampoo',
-    label: 'shampoo',
-    emoji: '🧴',
-    color: '#ffe8f5',
-    category: 'Personal Care & Beauty',
-    targetCategory: 'Self-Care & Relaxation',
-    badgeBg: '#ffe8f5',
-    badgeColor: '#db2777',
-  },
 ]
 
 const RECENT = ['bread', 'milk', 'eggs', 'peanut butter']
