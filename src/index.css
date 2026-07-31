@@ -1,0 +1,121 @@
+/* ══════════════════════════════════════════════════════════════════
+   BLINKIT DESIGN SYSTEM — Hyper-Speed Commerce (design.md)
+   Source of truth for colors, typography, shapes, and CTAs
+═══════════════════════════════════════════════════════════════════ */
+
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-inter: 'Inter', sans-serif;
+
+  /* Brand Colors from design.md */
+  --color-brand-yellow:      #f7d000;
+  --color-brand-yellow-tint: #fef9c3;
+  --color-brand-green:       #006e16;
+  --color-brand-green-dark:  #00530e;
+  --color-brand-green-tint:  #e8f5e9;
+
+  --color-accent-blue:       #0061a5;
+  --color-accent-blue-tint:  #ebf8ff;
+  --color-accent-red:        #ba1a1a;
+  --color-accent-red-tint:   #ffdad6;
+  --color-accent-orange:     #f8841a;
+
+  --color-surface:           #ffffff;
+  --color-surface-alt:       #f6f3f2;
+  --color-line:              #e5e7eb;
+  --color-line-strong:       #d0c6ab;
+  --color-ink:               #1b1b1c;
+  --color-ink-mid:           #4d4632;
+  --color-ink-soft:          #7e775f;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   EXPLICIT SOLID UTILITY OVERRIDES (Guarantees non-transparent rendering)
+═══════════════════════════════════════════════════════════════════ */
+.bg-surface          { background-color: #ffffff !important; }
+.bg-surface-alt      { background-color: #f6f3f2 !important; }
+.bg-brand-yellow     { background-color: #f7d000 !important; }
+.bg-brand-yellow-tint{ background-color: #fef9c3 !important; }
+.bg-brand-green      { background-color: #006e16 !important; }
+.bg-brand-green-tint { background-color: #e8f5e9 !important; }
+.bg-accent-blue-tint { background-color: #ebf8ff !important; }
+.bg-[#ebf8ff]        { background-color: #ebf8ff !important; }
+.bg-ink              { background-color: #1b1b1c !important; }
+.bg-ink-mid          { background-color: #4d4632 !important; }
+.bg-ink-soft         { background-color: #7e775f !important; }
+
+.text-ink            { color: #1b1b1c !important; }
+.text-ink-mid        { color: #4d4632 !important; }
+.text-ink-soft       { color: #7e775f !important; }
+.text-brand-green    { color: #006e16 !important; }
+.text-accent-blue    { color: #0061a5 !important; }
+.text-accent-red     { color: #ba1a1a !important; }
+
+.border-line         { border-color: #e5e7eb !important; }
+.border-brand-yellow { border-color: #f7d000 !important; }
+.border-brand-green  { border-color: #006e16 !important; }
+
+@layer base {
+  body {
+    background-color: #f6f3f2;
+    color: #1b1b1c;
+    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overscroll-behavior-y: none;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   DESIGN.MD SIGNATURE COMPONENTS
+═══════════════════════════════════════════════════════════════════ */
+
+/* Signature Add Button per design.md: White bg, 1.5px Yellow/Green border, label-bold green text */
+.btn-add-signature {
+  background-color: #ffffff;
+  border: 1.5px solid #f7d000;
+  color: #006e16;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 16px;
+  border-radius: 8px;
+  transition: all 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.btn-add-signature:hover, .btn-add-signature:active {
+  background-color: #fef9c3;
+  transform: scale(0.97);
+}
+
+/* Delivery Badge per design.md: Light blue bg (#ebf8ff) with tertiary blue text (#0061a5) */
+.badge-delivery {
+  background-color: #ebf8ff !important;
+  color: #0061a5 !important;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 14px;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   PHONE FRAME
+═══════════════════════════════════════════════════════════════════ */
+.phone-frame {
+  width: 360px;
+  height: 720px;
+  max-height: calc(100vh - 48px);
+  background: #f6f3f2 !important;
+  border-radius: 40px;
+  overflow: hidden;
+  position: relative;
+  box-shadow:
+    0 0 0 2px #1a1a1a,
+    0 0 0 6px #222,
+    0 25px 60px rgb(0 0 0 / 0.4);
+}
+
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }

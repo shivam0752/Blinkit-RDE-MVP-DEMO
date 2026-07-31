@@ -1,0 +1,54 @@
+export const DEFAULT_MERMAID_CODE = `flowchart LR
+
+    subgraph SRC["Blinkit Production Systems"]
+        A1[Order History DB<br/>real transaction data]
+        A2[Product Catalog DB<br/>live inventory]
+        A3[AI Discovery Engine<br/>Classified Barrier Data<br/>Part 1 pipeline]
+    end
+
+    subgraph BATCH["Offline Batch Layer — Weekly, Active Users Only"]
+        B1[Occasion &amp; Adjacency<br/>Reasoning Job]
+        B2[(Precomputed<br/>Suggestion Store)]
+        B1 --> B2
+    end
+
+    subgraph SERVE["Live Serving Layer — Fast Lookup, No Live AI Calls"]
+        C1{Lookup Service}
+        C2[(Reassurance<br/>Template Engine)]
+        C3[Fallback Logic<br/>show nothing if<br/>no coherent match]
+        C2 --> C1
+        C3 --> C1
+        G[Guardrail Monitors<br/>latency, return rate,<br/>search relevance]
+        C1 -.-> G
+    end
+
+    subgraph APP["Blinkit App — Production Surfaces"]
+        D1[Search Results]
+        D2[Product Detail]
+        D3[Cart Review]
+        D4[Order Confirmation]
+        D1 --> D2 --> D4
+        D3 --> D4
+    end
+
+    A1 --> B1
+    A2 --> B1
+    A3 --> B1
+
+    B2 --> C1
+    D1 -- query --> C1
+    D3 -- review --> C1
+    C1 -- suggestions + reassurance --> D1
+    C1 -- suggestions + reassurance --> D3
+
+    classDef src fill:#EAF2FF,stroke:#378ADD,color:#333
+    classDef batch fill:#FFF3D6,stroke:#EF9F27,color:#333
+    classDef serve fill:#E3F2EC,stroke:#1D9E75,color:#333
+    classDef app fill:#E8EEFB,stroke:#378ADD,color:#333
+    classDef guard fill:#FCE7E1,stroke:#D85A30,color:#333
+
+    class A1,A2,A3 src
+    class B1,B2 batch
+    class C1,C2,C3 serve
+    class D1,D2,D3,D4 app
+    class G guard`
