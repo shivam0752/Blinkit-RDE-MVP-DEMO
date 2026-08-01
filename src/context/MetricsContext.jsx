@@ -1,4 +1,4 @@
-// MetricsContext — tracks the 4 funnel events defined in RDE spec Section 5
+// MetricsContext — tracks the 4 funnel events defined in Scout spec Section 5
 // EXPOSURE   → suggested item rendered on screen
 // ENGAGEMENT → user taps the suggested item
 // CONVERSION → user adds suggested item to cart
@@ -18,7 +18,7 @@ export function MetricsProvider({ children }) {
   const fire = useCallback((event) => {
     setMetrics(prev => ({ ...prev, [event]: prev[event] + 1 }))
     // Also log to console for demo
-    console.log(`[RDE] ${event} fired at ${new Date().toISOString()}`)
+    console.log(`[Scout] ${event} fired at ${new Date().toISOString()}`)
   }, [])
 
   const reset = useCallback(() => {

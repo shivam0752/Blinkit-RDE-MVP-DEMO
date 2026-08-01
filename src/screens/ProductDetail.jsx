@@ -13,7 +13,7 @@ const DOT_COUNT = 3
 export default function ProductDetail() {
   const { id } = useParams()
   const navigate = useNavigate()
-  const [sheetOpen, setSheetOpen] = useState(false)
+  const [showOptOutPopup, setShowOptOutPopup] = useState(false)
   const [dot, setDot] = useState(0)
   const [wishlisted, setWishlisted] = useState(false)
   const { lineFor, isNewCategory } = useRde()
@@ -137,30 +137,62 @@ export default function ProductDetail() {
         </div>
       </div>
 
-      {/* ── Reassurance box ── */}
-      <AnimatePresence>
-        {reassuranceLine && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            className="mx-3 mt-2"
-          >
-            <div className="bg-brand-green-tint border border-brand-green/30 rounded-[10px] p-3.5 animate-pulse-ring">
-              <div className="flex items-center gap-2 mb-1.5">
-                <ShieldCheck size={15} className="text-brand-green flex-shrink-0" />
-                <p className="text-[12px] font-bold text-brand-green">Trying this for the first time?</p>
+      {/* ── Default-Visible Scout Reasoning Box ── */}
+      {reassuranceLine && (
+        <motion.div
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mx-3 mt-2"
+        >
+          <div className="bg-brand-green-tint border border-brand-green/30 rounded-[12px] p-3.5 shadow-sm">
+            {/* Scout Trusted Header */}
+            <div className="flex items-center justify-between pb-2 border-b border-brand-green/20">
+              <div className="flex items-center gap-1.5">
+                <ShieldCheck size={16} className="text-brand-green flex-shrink-0" />
+                <span className="text-[12.5px] font-extrabold text-brand-green">Scout Trusted Recommendation</span>
               </div>
-              <p className="text-[13px] leading-snug text-ink-mid">{reassuranceLine}</p>
+              <span className="text-[9.5px] font-bold bg-brand-green text-white px-2 py-0.5 rounded-full">
+                Verified
+              </span>
+            </div>
+
+            {/* 2 Reasons per Section 3a */}
+            <div className="flex flex-col gap-2.5 my-2.5">
+              {/* 1. Cohort pattern line */}
+              <div className="flex items-start gap-2">
+                <span className="text-base flex-shrink-0">🧺</span>
+                <div>
+                  <p className="text-[11.5px] font-bold text-ink leading-tight">Shoppers with baskets like yours</p>
+                  <p className="text-[11px] text-ink-mid leading-snug mt-0.5">
+                    Customers who buy your regular essentials often add this product within their next few orders.
+                  </p>
+                </div>
+              </div>
+
+              {/* 2. Category trust stat */}
+              <div className="flex items-start gap-2">
+                <span className="text-base flex-shrink-0">🛡️</span>
+                <div>
+                  <p className="text-[11.5px] font-bold text-ink leading-tight">Category trust & quality record</p>
+                  <p className="text-[11px] text-ink-mid leading-snug mt-0.5">
+                    {reassuranceLine}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* De-emphasized Opt-Out Option */}
+            <div className="pt-2 border-t border-brand-green/20 text-center">
               <button
-                onClick={() => setSheetOpen(true)}
-                className="text-[12px] text-accent-blue font-semibold mt-2 flex items-center gap-0.5"
+                onClick={() => setShowOptOutPopup(true)}
+                className="text-[10px] text-ink-soft hover:text-ink font-medium transition-colors cursor-pointer"
               >
-                Why am I seeing this? ›
+                Don't show me new-category suggestions
               </button>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
+        </motion.div>
+      )}
 
       {/* ── Highlights ── */}
       {p.highlights && (
@@ -185,7 +217,45 @@ export default function ProductDetail() {
         </div>
       )}
 
-      <WhyThisSheet product={p} open={sheetOpen} onClose={() => setSheetOpen(false)} />
+      {/* Opt-out Confirmation Popup Modal */}
+      <AnimatePresence>
+        {showOptOutPopup && (
+          <motion.div
+            className="absolute inset-0 z-50 flex items-center justify-center p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <div
+              className="absolute inset-0 bg-black/60 backdrop-blur-xs"
+              onClick={() => setShowOptOutPopup(false)}
+            />
+            <motion.div
+              className="relative bg-surface rounded-2xl p-5 max-w-[280px] w-full text-center shadow-2xl z-50 border border-line"
+              initial={{ scale: 0.85, opacity: 0, y: 10 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.85, opacity: 0, y: 10 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+            >
+              <div className="w-11 h-11 rounded-full bg-amber-500/10 text-amber-600 flex items-center justify-center mx-auto mb-3 text-xl">
+                🚫
+              </div>
+              <h3 className="text-[14px] font-bold text-ink mb-1.5 leading-snug">
+                You will not see any recommendations now
+              </h3>
+              <p className="text-[11px] text-ink-soft mb-4 leading-relaxed bg-surface-alt py-1.5 px-2 rounded-md">
+                (This is just a demo text for the MVP)
+              </p>
+              <button
+                onClick={() => setShowOptOutPopup(false)}
+                className="w-full py-2.5 bg-brand-green text-white rounded-[10px] text-xs font-bold shadow-sm hover:opacity-95 transition-opacity cursor-pointer"
+              >
+                Got it
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

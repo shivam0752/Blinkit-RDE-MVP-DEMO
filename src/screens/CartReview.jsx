@@ -143,7 +143,7 @@ export default function CartReview() {
                     Add ₹{amountNeededForFree} more for <span className="text-brand-green">FREE delivery</span>!
                   </p>
                   <p className="text-[11px] text-ink-soft mt-0.5">
-                    Check out our RDE suggestions below to reach free delivery
+                    Check out our Scout suggestions below to reach free delivery
                   </p>
                 </div>
               </div>

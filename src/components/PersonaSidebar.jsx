@@ -17,7 +17,7 @@ export default function PersonaSidebar() {
           <h2 className="text-[14px] font-bold text-ink">Buyer Personas</h2>
         </div>
         <p className="text-[10.5px] text-ink-soft mt-0.5 leading-snug">
-          Select a buyer profile to test how RDE adapts suggestions to their purchase history.
+          Select a buyer profile to test how Scout adapts suggestions to their purchase history.
         </p>
       </div>
 
@@ -80,7 +80,7 @@ export default function PersonaSidebar() {
       </div>
 
       <div className="bg-surface-alt rounded-[10px] p-2 border border-line text-[10px] text-ink-soft leading-snug mt-auto">
-        💡 <strong className="text-ink">Demo tip:</strong> Search <strong className="text-ink">"swiss knife"</strong> with <strong className="text-ink">Persona B</strong> to see RDE fallback logic fire!
+        💡 <strong className="text-ink">Demo tip:</strong> Search <strong className="text-ink">"swiss knife"</strong> with <strong className="text-ink">Persona B</strong> to see Scout fallback logic fire!
       </div>
     </div>
   )

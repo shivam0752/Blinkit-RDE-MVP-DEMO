@@ -1,4 +1,4 @@
-# Reasoned Discovery Engine (RDE) — MVP Specification
+# Scout (formerly Reasoned Discovery Engine / RDE) — MVP Specification
 
 This document is the full functional spec for the RDE prototype. Feed this directly to the coding agent as the source of truth for logic, data structures, and screen behavior. It defines exactly what happens for any search, using three worked examples, plus the underlying algorithm so the logic is deterministic and reproducible — not hardcoded per example.
 
@@ -160,27 +160,35 @@ Each category has a pre-classified dominant barrier theme (mirrors real output f
 {
   "Pet Supplies": {
     "barrier": "trust_deficit",
-    "template": "First time in Pet Supplies for you — return window: [X] for this item."
+    "template": "Zero complaints in past 6 months — 7-day return policy for unopened items."
   },
   "Snacks & Beverages": {
-    "barrier": "pricing_skepticism",
-    "template": "Priced to match what you'd pay elsewhere — return window: [X]."
+    "barrier": "quality_assurance",
+    "template": "Zero complaints in past 3 months — fresh stock & express 8-min delivery."
   },
   "Baby Products": {
     "barrier": "authenticity_concern",
-    "template": "Sealed and verified at source. [Return window: X] OR [Non-returnable for hygiene/safety reasons — verified authenticity is why we're showing it]."
+    "template": "Sealed and verified at source — zero complaints in past 6 months."
   },
   "Gourmet & Imported Food": {
     "barrier": "assortment_uncertainty",
-    "template": "Small-batch size to try first. [Non-returnable once opened — sizing down lowers your risk instead]."
+    "template": "Zero complaints in past 3 months — small-batch fresh quality guarantee."
   },
   "Household Essentials": {
-    "barrier": "pricing_skepticism",
-    "template": "Same price as your regular essentials — return window: [X]."
+    "barrier": "quality_assurance",
+    "template": "Zero complaints in past 6 months — authentic quality & 3-day return policy."
   },
   "Electronics & Accessories": {
     "barrier": "authenticity_concern",
-    "template": "Ships sealed, tamper-proof packaging. Return window: [X] for unopened items."
+    "template": "Ships sealed, tamper-proof packaging — zero complaints & 7-day replacement guarantee."
+  },
+  "Personal Care & Beauty": {
+    "barrier": "authenticity_concern",
+    "template": "Zero complaints in past 6 months — 100% authentic brand warranty included."
+  },
+  "Groceries": {
+    "barrier": "quality_doubt",
+    "template": "Zero complaints in past 6 months — freshness guaranteed with instant replacement."
   }
 }
 ```

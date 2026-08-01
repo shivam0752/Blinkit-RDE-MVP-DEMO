@@ -1,4 +1,4 @@
-// InsightPanel — Right Sidebar for Real-Time Live RDE Reasoning Trace (Section 5)
+// InsightPanel — Right Sidebar for Real-Time Live Scout Reasoning Trace (Section 5)
 import { useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Brain, Sparkles, CheckCircle2, XCircle, AlertTriangle, ShoppingCart, MousePointerClick, Home, Compass } from 'lucide-react'
@@ -27,7 +27,7 @@ export default function InsightPanel() {
           <div className="w-7 h-7 rounded-full bg-accent-blue-tint flex items-center justify-center text-accent-blue">
             <Brain size={16} />
           </div>
-          <h2 className="text-[14px] font-bold text-ink">Live RDE Insights</h2>
+          <h2 className="text-[14px] font-bold text-ink">Live Scout Insights</h2>
         </div>
         <p className="text-[10.5px] text-ink-soft mt-0.5 leading-snug">
           Real-time decision trace explaining why suggestions appear or get filtered.
@@ -62,7 +62,7 @@ export default function InsightPanel() {
             </div>
             <p className="text-[12px] font-bold text-ink leading-snug">Browsing Catalog</p>
             <p className="text-[10px] text-ink-soft mt-1 leading-snug">
-              Tap the search bar or pick a category in the phone to test RDE occasion detection.
+              Tap the search bar or pick a category in the phone to test Scout occasion detection.
             </p>
           </motion.div>
         ) : isSearchPickScreen ? (

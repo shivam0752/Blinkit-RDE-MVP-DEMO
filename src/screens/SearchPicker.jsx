@@ -1,4 +1,4 @@
-// SearchPicker — Quick Search Options per Section 2 & 7 of RDE Spec (No Em-Dashes)
+// SearchPicker — Quick Search Options per Section 2 & 7 of Scout Spec (No Em-Dashes)
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowLeft, Mic, Search, Sparkles } from 'lucide-react'

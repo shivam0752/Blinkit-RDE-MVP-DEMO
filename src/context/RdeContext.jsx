@@ -1,4 +1,4 @@
-// RdeContext — Persona State & Live RDE Reasoning Tracer
+// RdeContext — Persona State & Live Scout Reasoning Tracer
 import { createContext, useContext, useState, useMemo } from 'react'
 import {
   PERSONAS,

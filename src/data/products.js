@@ -408,7 +408,7 @@ export const chargerProducts = [
   },
 ]
 
-// ── RDE Occasion Suggestions (Expanded pool per Section 2c) ────────
+// ── Scout Occasion Suggestions (Expanded pool per Section 2c) ────────
 export const occasionSuggestions = [
   // "bread" -> Breakfast & Pantry
   {

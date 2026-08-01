@@ -11,7 +11,7 @@ export default function SectionNavRail({ activeSection, setActiveSection }) {
             ⚡
           </div>
           <div className="hidden lg:flex flex-col min-w-0">
-            <span className="text-[14px] font-extrabold text-ink leading-none truncate">Blinkit RDE</span>
+            <span className="text-[14px] font-extrabold text-ink leading-none truncate">Blinkit Scout</span>
             <span className="text-[10px] font-bold text-brand-green mt-0.5">Engine Suite</span>
           </div>
         </div>
@@ -66,7 +66,7 @@ export default function SectionNavRail({ activeSection, setActiveSection }) {
       <div className="hidden lg:flex flex-col gap-1 p-2.5 bg-surface-alt rounded-[10px] border border-line text-[10px] text-ink-soft leading-tight">
         <div className="flex items-center gap-1 font-bold text-ink">
           <Sparkles size={12} className="text-brand-yellow-deep" />
-          <span>RDE Spec v2.0</span>
+          <span>Scout Spec v2.0</span>
         </div>
         <p>Switch sections anytime using the left navigation rail.</p>
       </div>

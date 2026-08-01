@@ -1,4 +1,4 @@
-// Home Screen — Section 6 of RDE Specification
+// Home Screen — Section 6 of Scout Specification
 // Standard search bar (leads to SearchPicker) + category grid + "Your usual" row
 // The 3 demo chips are on SearchPicker, not here
 import { useState } from 'react'

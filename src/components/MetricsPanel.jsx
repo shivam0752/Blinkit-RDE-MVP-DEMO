@@ -1,4 +1,4 @@
-// Demo Metrics Panel — Section 5 of RDE Specification
+// Demo Metrics Panel — Section 5 of Scout Specification
 // Floating togglable panel showing live EXPOSURE/ENGAGEMENT/CONVERSION/NSM_HIT counts
 // This makes the funnel from Slide 7 visibly provable inside the MVP itself.
 import { useState } from 'react'
@@ -60,7 +60,7 @@ export default function MetricsPanel() {
             <div className="flex items-center justify-between mb-3">
               <div>
                 <p className="text-white text-[13px] font-bold">🔬 Demo Metrics</p>
-                <p className="text-white/50 text-[10px]">RDE Funnel — Live Counters</p>
+                <p className="text-white/50 text-[10px]">Scout Funnel — Live Counters</p>
               </div>
               <button onClick={reset} className="flex items-center gap-1 text-white/40 text-[10px]">
                 <RotateCcw size={10} />

@@ -1,4 +1,4 @@
-// Screen 1 — Search results with RDE suggestions inserted directly into the product grid.
+// Screen 1 — Search results with Scout suggestions inserted directly into the product grid.
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'

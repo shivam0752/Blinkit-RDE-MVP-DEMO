@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Heart, Clock3 } from 'lucide-react'
+import { Heart, Clock3, CheckCircle2 } from 'lucide-react'
 import AddButton from './AddButton.jsx'
 import { useRde } from '../context/RdeContext.jsx'
 
@@ -136,17 +136,27 @@ export default function ProductCard({ product, inserted = false, teaser }) {
         <Stars rating={p.rating} count={p.ratingCount} />
 
         {/* Price row */}
-        <div className="mt-auto pt-1.5 flex items-end justify-between">
-          <div>
-            <div className="flex items-baseline gap-1 flex-wrap">
-              <p className="text-[13.5px] font-extrabold text-ink">₹{p.price}</p>
-              {p.mrp > p.price && (
-                <p className="text-[11px] text-ink-soft line-through">₹{p.mrp}</p>
-              )}
+        <div className="mt-auto pt-1.5 flex flex-col gap-1">
+          <div className="flex items-end justify-between">
+            <div>
+              <div className="flex items-baseline gap-1 flex-wrap">
+                <p className="text-[13.5px] font-extrabold text-ink">₹{p.price}</p>
+                {p.mrp > p.price && (
+                  <p className="text-[11px] text-ink-soft line-through">₹{p.mrp}</p>
+                )}
+              </div>
+              <DiscountBadge price={p.price} mrp={p.mrp} />
             </div>
-            <DiscountBadge price={p.price} mrp={p.mrp} />
+            <AddButton productId={p.id} />
           </div>
-          <AddButton productId={p.id} />
+
+          {/* Scout Trusted Badge directly under price */}
+          {inserted && (
+            <div className="flex items-center gap-1 text-[9.5px] font-bold text-brand-green bg-brand-green-tint px-1.5 py-0.5 rounded-[4px] w-fit border border-brand-green/20">
+              <CheckCircle2 size={10} className="text-brand-green flex-shrink-0" />
+              <span>Scout Trusted</span>
+            </div>
+          )}
         </div>
       </div>
     </motion.div>

@@ -101,11 +101,11 @@ function DashboardLayout() {
                 </div>
 
                 <p className="mt-2 text-black/40 text-[10.5px] font-semibold tracking-wide">
-                  Blinkit · Section 1: RDE MVP Engine
+                  Blinkit · Section 1: Scout MVP Engine
                 </p>
               </div>
 
-              {/* 3. Right Sidebar: Live RDE Insight Panel */}
+              {/* 3. Right Sidebar: Live Scout Insight Panel */}
               <InsightPanel />
             </motion.div>
           ) : (

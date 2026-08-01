@@ -177,7 +177,7 @@ export default function ArchitectureScreen() {
                 <div>
                   <p className="text-[13px] font-bold text-ink leading-tight">No Live AI Calls in Request Path</p>
                   <p className="text-[11.5px] text-ink-mid leading-relaxed mt-1">
-                    Search and checkout only do a fast, near-free lookup against precomputed results, so cost never scales with live traffic volume.
+                    No live AI calls in the request path — search and checkout only do a fast, near-free lookup.
                   </p>
                 </div>
               </div>
@@ -191,7 +191,7 @@ export default function ArchitectureScreen() {
                 <div>
                   <p className="text-[13px] font-bold text-ink leading-tight">Batch Reasoning Scoped to Active Users</p>
                   <p className="text-[11.5px] text-ink-mid leading-relaxed mt-1">
-                    Runs weekly, scoped only to users active that week — not the full 16.9M MAU every cycle, so compute cost tracks actual engagement, not total user base size.
+                    Batch reasoning runs weekly, scoped only to active users — cost tracks engagement, not total base size.
                   </p>
                 </div>
               </div>
@@ -205,7 +205,7 @@ export default function ArchitectureScreen() {
                 <div>
                   <p className="text-[13px] font-bold text-ink leading-tight">Latency Stays Under 50ms</p>
                   <p className="text-[11.5px] text-ink-mid leading-relaxed mt-1">
-                    Since the AI reasoning already happened offline, the app's core 10-minute-delivery speed is never at risk from this feature.
+                    Latency stays under 50ms — since reasoning already happened offline.
                   </p>
                 </div>
               </div>
@@ -217,9 +217,9 @@ export default function ArchitectureScreen() {
                   4
                 </span>
                 <div>
-                  <p className="text-[13px] font-bold text-ink leading-tight">Effort is Incremental, Not a Rebuild</p>
+                  <p className="text-[13px] font-bold text-ink leading-tight">Effort is Incremental</p>
                   <p className="text-[11.5px] text-ink-mid leading-relaxed mt-1">
-                    RDE reuses the same classification infrastructure already built for the AI Discovery Engine (Part 1), so it's an extension of existing work, not a new system from scratch.
+                    Effort is incremental — reuses the same classification infrastructure from Part 1, not a rebuild.
                   </p>
                 </div>
               </div>
@@ -233,7 +233,7 @@ export default function ArchitectureScreen() {
                 <div>
                   <p className="text-[13px] font-bold text-ink leading-tight">Targets a Validated Root Cause</p>
                   <p className="text-[11.5px] text-ink-mid leading-relaxed mt-1">
-                    Three independent research methods (AI engine, survey, interviews) converged on the same blocker, so the mechanism is built to fix something proven, not assumed.
+                    Targets a validated root cause — three independent research methods converged on the same blocker.
                   </p>
                 </div>
               </div>
@@ -247,7 +247,7 @@ export default function ArchitectureScreen() {
                 <div>
                   <p className="text-[13px] font-bold text-ink leading-tight">Works With Existing Behavior</p>
                   <p className="text-[11.5px] text-ink-mid leading-relaxed mt-1">
-                    Occasion-based suggestions ride moments users are already in (searching, checking out), so adoption doesn't require teaching anyone a new habit.
+                    Works with existing behavior — Scout's suggestions ride moments users are already in.
                   </p>
                 </div>
               </div>
@@ -282,11 +282,11 @@ export default function ArchitectureScreen() {
               </li>
               <li className="flex items-start gap-2 text-[12px] text-ink-mid leading-snug">
                 <span className="w-1.5 h-1.5 rounded-full bg-brand-green mt-1.5 flex-shrink-0" />
-                <span>"Why you're seeing this" panel shows two grounded reasons — a cohort pattern and a real category trust stat — plus a one-tap opt-out</span>
+                <span>"Scout Trusted" badge and reasoning shown by default — a cohort pattern and a real category trust stat, visible without a tap</span>
               </li>
               <li className="flex items-start gap-2 text-[12px] text-ink-mid leading-snug">
                 <span className="w-1.5 h-1.5 rounded-full bg-brand-green mt-1.5 flex-shrink-0" />
-                <span>Every search screen shows 5-6 real product results alongside 2-3 RDE suggestions, so the app feels fully populated</span>
+                <span>Every search screen shows 5-6 real product results alongside 2-3 Scout suggestions, so the app feels fully populated</span>
               </li>
             </ul>
           </div>
@@ -308,7 +308,7 @@ export default function ArchitectureScreen() {
               </li>
               <li className="flex items-start gap-2 text-[12px] text-ink-mid leading-snug">
                 <span className="w-1.5 h-1.5 rounded-full bg-accent-red mt-1.5 flex-shrink-0" />
-                <span>No real backend integration — purchase history and product data are mocked for this demo; the architecture above shows how that connection would work in production</span>
+                <span>No real backend integration — purchase history and product data are mocked for this demo; the architecture shows how that connection would work in production</span>
               </li>
               <li className="flex items-start gap-2 text-[12px] text-ink-mid leading-snug">
                 <span className="w-1.5 h-1.5 rounded-full bg-accent-red mt-1.5 flex-shrink-0" />
@@ -327,17 +327,17 @@ export default function ArchitectureScreen() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 pt-1">
             <div className="bg-accent-blue-tint/40 p-3.5 rounded-[12px] border border-accent-blue/20 flex flex-col gap-1.5">
               <span className="text-[11px] font-extrabold text-accent-blue uppercase tracking-wider">Phase 2</span>
-              <p className="text-[12.5px] text-ink font-bold leading-tight">Life-Event & Pattern-Change Detection</p>
+              <p className="text-[12.5px] text-ink font-bold leading-tight">Phase 2</p>
               <p className="text-[11.5px] text-ink-mid leading-relaxed">
-                Recognizing first-time signals around major life events and behavior shifts.
+                Phase 2: life-event and pattern-change detection
               </p>
             </div>
 
             <div className="bg-brand-green-tint/40 p-3.5 rounded-[12px] border border-brand-green/20 flex flex-col gap-1.5">
               <span className="text-[11px] font-extrabold text-brand-green uppercase tracking-wider">Phase 3</span>
-              <p className="text-[12.5px] text-ink font-bold leading-tight">Feedback-Loop Tuning</p>
+              <p className="text-[12.5px] text-ink font-bold leading-tight">Phase 3</p>
               <p className="text-[11.5px] text-ink-mid leading-relaxed">
-                Continuously tuning suggestions based on real-time accept/ignore signals over time.
+                Phase 3: feedback-loop tuning based on accept/ignore signals
               </p>
             </div>
 
@@ -345,7 +345,7 @@ export default function ArchitectureScreen() {
               <span className="text-[11px] font-extrabold text-brand-yellow-deep uppercase tracking-wider">Production</span>
               <p className="text-[12.5px] text-ink font-bold leading-tight">Full Production Integration</p>
               <p className="text-[11.5px] text-ink-mid leading-relaxed">
-                Replacing mocked data structures with live, production Blinkit databases and serving systems.
+                Full production integration — replacing mocked data with live Blinkit systems
               </p>
             </div>
           </div>

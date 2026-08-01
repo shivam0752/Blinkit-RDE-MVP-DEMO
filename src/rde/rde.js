@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════
-// REASONED DISCOVERY ENGINE — Full Persona & Occasion Spec
+// SCOUT — Full Persona & Occasion Spec
 // Source of truth: RDE Specification.md (Updated Sections 2, 7, 7a, 7b)
 // ══════════════════════════════════════════════════════════════════
 
@@ -26,7 +26,7 @@ export const PERSONAS = [
   },
   {
     id: 'persona_b',
-    name: 'The Price-Blocked Explorer',
+    name: 'The Cautious Explorer',
     subtitle: 'Persona B',
     lifestyle: '20M, hosteler, Delhi',
     avatar: '👨‍🎓',
@@ -149,35 +149,35 @@ export const FALLBACK_ITEMS = {
 export const BARRIER_LINES = {
   'Pet Supplies': {
     barrier: 'trust_deficit',
-    template: 'First time in Pet Supplies for you: return window 7 days for unopened items.',
+    template: 'Zero complaints in past 6 months: 7-day return policy for unopened items.',
   },
   'Snacks & Beverages': {
-    barrier: 'pricing_skepticism',
-    template: 'Priced to match regular store pricing: instant 8-min delivery.',
+    barrier: 'quality_assurance',
+    template: 'Zero complaints in past 3 months: fresh stock & express 8-min delivery.',
   },
   'Baby Products': {
     barrier: 'authenticity_concern',
-    template: 'Sealed and verified at source: non-returnable for hygiene & baby safety reasons.',
+    template: 'Sealed & verified at source: zero complaints in past 6 months.',
   },
   'Gourmet & Imported Food': {
     barrier: 'assortment_uncertainty',
-    template: 'Small-batch size to try first: non-returnable once opened.',
+    template: 'Zero complaints in past 3 months: small-batch fresh quality guarantee.',
   },
   'Household Essentials': {
-    barrier: 'pricing_skepticism',
-    template: 'Same price as regular stores: return window 3 days for unused items.',
+    barrier: 'quality_assurance',
+    template: 'Zero complaints in past 6 months: authentic quality & 3-day return policy.',
   },
   'Electronics & Accessories': {
     barrier: 'authenticity_concern',
-    template: 'Ships sealed with tamper-proof packaging: 7-day replacement guarantee.',
+    template: 'Tamper-proof sealed: zero complaints & 7-day replacement guarantee.',
   },
   'Personal Care & Beauty': {
-    barrier: 'pricing_skepticism',
-    template: 'Authentic brand warranty included: return window 7 days.',
+    barrier: 'authenticity_concern',
+    template: 'Zero complaints in past 6 months: 100% authentic brand warranty included.',
   },
   Groceries: {
     barrier: 'quality_doubt',
-    template: 'Freshness guaranteed: immediate replacement if not satisfied.',
+    template: 'Zero complaints in past 6 months: freshness guaranteed with instant replacement.',
   },
 }
 
@@ -195,7 +195,7 @@ export function isZeroHistory(category, purchaseHistory) {
   return !purchaseHistory.includes(category)
 }
 
-// Trace reasoning for the right-side Live RDE Insight Panel (Section 5)
+// Trace reasoning for the right-side Live Scout Insight Panel (Section 5)
 export function traceRdeReasoning(query, persona, cartCategories = [], completedOrders = []) {
   const norm = query.toLowerCase().trim()
   const occ = OCCASION_MAP[norm]

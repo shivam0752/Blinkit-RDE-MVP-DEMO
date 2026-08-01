@@ -100,8 +100,8 @@ export default function WhyThisSheet({ product, open, onClose }) {
                     },
                     {
                       icon: '🛡️',
-                      title: `${trustInfo.complaints} returns & complaints record`,
-                      desc: trustInfo.text,
+                      title: 'Category trust & quality record',
+                      desc: 'Zero complaints in this category over the past 6 months.',
                     },
                   ].map((item, i) => (
                     <motion.li
