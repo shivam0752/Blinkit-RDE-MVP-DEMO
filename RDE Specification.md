@@ -36,28 +36,28 @@ flowchart TD
     D -- no --> F["Check fallback category"]
     F --> G{"Fallback survives?"}
     G -- yes --> H["Show fallback<br/><sup>+ trust reason</sup>"]
-    G -- no --> I["Show nothing<br/><sup>Never an unrelated item</sup>"]
+    G -- no --> I["Show 'Running low on this?'<br/><sup>Restock habitual • Excluded from metrics</sup>"]
 
     classDef trigger fill:#383838,stroke:#262626,color:#ffffff,font-weight:bold
     classDef process fill:#1b4985,stroke:#0f2b54,color:#ffffff,font-weight:bold
     classDef decision fill:#6d3e07,stroke:#452703,color:#fef08a,font-weight:bold
     classDef shown fill:#1b5816,stroke:#10380d,color:#ffffff,font-weight:bold
-    classDef nosuggest fill:#722513,stroke:#46160b,color:#ffffff,font-weight:bold
+    classDef restock fill:#78350f,stroke:#451a03,color:#fef08a,font-weight:bold
 
     class A trigger
     class B,C,F process
     class D,G decision
     class E,H shown
-    class I nosuggest
+    class I restock
 ```
 
-*Every shown suggestion is split across search and checkout, and marks its category instantly once purchased — the next relevant suggestion only appears in the following week's batch.*
+*Every shown suggestion is split across search and checkout, and marks its category instantly once purchased. If both occasion and Section 2a fallback pools produce no zero-history items, Scout surfaces a "Running low on this?" habitual restock card (excluded from discovery metrics).*
 
 "Every suggestion starts with the same question: does this search or cart imply a shopping occasion Scout recognizes? If it does, candidate items are filtered down to only the categories a user has never bought from — anything they already shop for is excluded automatically.
 
-If nothing survives that filter, Scout doesn't give up immediately — it checks one fallback category before deciding. But if even that comes up empty, Scout shows nothing at all. This is deliberate: an irrelevant suggestion does more damage to trust than no suggestion ever would.
+If nothing survives that filter, Scout doesn't give up immediately — it checks one fallback category before deciding. If even that comes up empty of zero-history items, Scout surfaces a 'Running low on this?' card recommending a restock of the user's least-recently-reordered habitual category. This card is visually distinct, has no trust barrier lines, and is excluded from Scout's discovery metrics and NSM calculations.
 
-Whatever does get shown is never shown once and forgotten — it's split across two moments, search and checkout, so a user gets a second, lower-pressure chance to consider it. And the moment they buy something new, that category is marked instantly, so it won't be suggested to them again."
+Whatever does get shown is never shown once and forgotten — it's split across two moments, post-add on search/detail and checkout, so a user gets a second, lower-pressure chance to consider it. And the moment they buy something new, that category is marked instantly, so it won't be suggested to them again."
 
 ---
 

@@ -10,19 +10,19 @@ const DECISION_FLOW_MERMAID = `flowchart TD
     D -- no --> F["Check fallback category"]
     F --> G{"Fallback survives?"}
     G -- yes --> H["Show fallback<br/><sup>+ trust reason</sup>"]
-    G -- no --> I["Show nothing<br/><sup>Never an unrelated item</sup>"]
+    G -- no --> I["Show 'Running low on this?'<br/><sup>Restock habitual • Excluded from metrics</sup>"]
 
     classDef trigger fill:#383838,stroke:#262626,color:#ffffff,font-weight:bold
     classDef process fill:#1b4985,stroke:#0f2b54,color:#ffffff,font-weight:bold
     classDef decision fill:#6d3e07,stroke:#452703,color:#fef08a,font-weight:bold
     classDef shown fill:#1b5816,stroke:#10380d,color:#ffffff,font-weight:bold
-    classDef nosuggest fill:#722513,stroke:#46160b,color:#ffffff,font-weight:bold
+    classDef restock fill:#78350f,stroke:#451a03,color:#fef08a,font-weight:bold
 
     class A trigger
     class B,C,F process
     class D,G decision
     class E,H shown
-    class I nosuggest`
+    class I restock`
 
 export default function ScoutDecisionFlow() {
   const [viewMode, setViewMode] = useState('visual') // 'visual' | 'mermaid'
@@ -392,37 +392,37 @@ export default function ScoutDecisionFlow() {
                 no
               </text>
 
-              {/* 7. NO SUGGESTION: Show nothing */}
-              <g transform="translate(140, 480)">
+              {/* 7. HABITUAL RESTOCK FALLBACK: Show "Running low on this?" */}
+              <g transform="translate(130, 480)">
                 <rect
                   x="0"
                   y="0"
-                  width="220"
+                  width="240"
                   height="50"
                   rx="7"
-                  fill="#722513"
-                  stroke="#46160b"
+                  fill="#78350f"
+                  stroke="#451a03"
                   strokeWidth="1.5"
                 />
                 <text
-                  x="110"
+                  x="120"
                   y="22"
                   textAnchor="middle"
                   fill="#ffffff"
-                  fontSize="13"
+                  fontSize="12.5"
                   fontWeight="700"
                 >
-                  Show nothing
+                  Show "Running low on this?"
                 </text>
                 <text
-                  x="110"
+                  x="120"
                   y="38"
                   textAnchor="middle"
-                  fill="#fca5a5"
-                  fontSize="11"
+                  fill="#fef08a"
+                  fontSize="10.5"
                   fontWeight="500"
                 >
-                  Never an unrelated item
+                  Restock habitual • Excluded from metrics
                 </text>
               </g>
             </svg>
@@ -430,8 +430,7 @@ export default function ScoutDecisionFlow() {
             {/* Footnote text directly below diagram */}
             <p className="text-[11.5px] text-ink-soft text-center leading-relaxed mt-4 max-w-[540px]">
               Every shown suggestion is split across search and checkout, and marks its category
-              instantly once purchased — the next relevant suggestion only appears in the following
-              week's batch.
+              instantly once purchased — if both occasion and Section 2a fallback pools produce no zero-history items, Scout surfaces a "Running low on this?" habitual restock card (excluded from discovery metrics).
             </p>
 
             {/* Color Legend Bar */}
@@ -453,8 +452,8 @@ export default function ScoutDecisionFlow() {
                 <span className="font-semibold text-ink-mid text-[11px]">Shown</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <span className="w-3 h-3 rounded-sm bg-[#722513] inline-block" />
-                <span className="font-semibold text-ink-mid text-[11px]">No suggestion</span>
+                <span className="w-3 h-3 rounded-sm bg-[#78350f] inline-block" />
+                <span className="font-semibold text-ink-mid text-[11px]">Habitual restock</span>
               </div>
             </div>
           </div>

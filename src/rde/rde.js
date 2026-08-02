@@ -201,27 +201,75 @@ export function traceRdeReasoning(query, persona, cartCategories = [], completed
   const occ = OCCASION_MAP[norm]
   const userHistory = [...persona.purchaseHistory, ...cartCategories, ...completedOrders]
 
+  // Least-recently-reordered habitual category from user purchase history
+  const habitualCategory = persona.purchaseHistory[0] ?? 'Groceries'
+
+  // Helper to build a habitual restock candidate
+  const getRestockCandidate = (cat) => {
+    const restockProduct =
+      occasionSuggestions.find((s) => s.category === cat) ??
+      bakeryProducts.find((s) => s.category === cat) ?? {
+        id: 'br-2',
+        name: 'Britannia Brown Bread',
+        category: 'Groceries',
+        price: 55,
+        qty: '400 g',
+        emoji: '🥖',
+        tint: '#f7ead8',
+      }
+
+    return {
+      id: restockProduct.id,
+      item: restockProduct.name,
+      category: cat,
+      status: 'restock',
+      isRestock: true,
+      badgeLabel: 'Running low on this?',
+      reason: `Habitual restock for ${cat} (Excluded from Scout discovery metrics)`,
+      noTrustLine: true,
+      excludeFromMetrics: true,
+    }
+  }
+
   if (!occ) {
     // Search query outside explicit occasion map -> trigger Fallback (Section 2a)
     const detectedCategory = SEARCH_CATEGORY_MAP[norm] ?? 'Groceries'
     const pairings = FALLBACK_PAIRINGS[detectedCategory] ?? ['Household Essentials', 'Groceries']
-    const validFallbackCategory = pairings.find(c => isZeroHistory(c, userHistory)) ??
-      CATEGORIES.find(c => isZeroHistory(c, userHistory)) ?? 'Gourmet & Imported Food'
+    const validFallbackCategory =
+      pairings.find((c) => isZeroHistory(c, userHistory)) ??
+      CATEGORIES.find((c) => isZeroHistory(c, userHistory))
 
-    return {
-      query: norm,
-      occasionName: `General Search (${detectedCategory})`,
-      candidates: [
-        {
-          id: FALLBACK_ITEMS[validFallbackCategory],
-          item: `Bestseller in ${validFallbackCategory}`,
-          category: validFallbackCategory,
-          status: 'shown',
-          reason: 'Selected via Section 2a Fallback Rule',
-        }
-      ],
-      fallbackFired: true,
-      fallbackDetails: `Main pool exhausted or unspecified query. Fallback pairing for ${detectedCategory} selected ${validFallbackCategory}.`,
+    if (validFallbackCategory) {
+      return {
+        query: norm,
+        occasionName: `General Search (${detectedCategory})`,
+        candidates: [
+          {
+            id: FALLBACK_ITEMS[validFallbackCategory],
+            item: `Bestseller in ${validFallbackCategory}`,
+            category: validFallbackCategory,
+            status: 'shown',
+            isRestock: false,
+            badgeLabel: 'Zero-History',
+            reason: 'Selected via Section 2a Fallback Rule',
+          },
+        ],
+        fallbackFired: true,
+        isRestockFallback: false,
+        fallbackDetails: `Main pool exhausted or unspecified query. Section 2a Fallback selected zero-history category ${validFallbackCategory}.`,
+      }
+    } else {
+      // Both main pool and Section 2a fallback produced NO zero-history item
+      // -> Surface "Running low on this?" habitual restock card
+      const restockCand = getRestockCandidate(habitualCategory)
+      return {
+        query: norm,
+        occasionName: `General Search (${detectedCategory})`,
+        candidates: [restockCand],
+        fallbackFired: true,
+        isRestockFallback: true,
+        fallbackDetails: `Main pool and Section 2a fallback produced no zero-history items. Surfacing habitual restock ("Running low on this?") for ${habitualCategory} — excluded from discovery metrics.`,
+      }
     }
   }
 
@@ -231,12 +279,15 @@ export function traceRdeReasoning(query, persona, cartCategories = [], completed
     return {
       ...s,
       status: isZero ? 'shown' : 'filtered',
+      isRestock: false,
+      badgeLabel: 'Zero-History',
       reason: isZero ? 'Zero-history for active persona' : `Already habitual (${s.category})`,
     }
   })
 
-  const shownCount = candidates.filter(c => c.status === 'shown').length
+  const shownCount = candidates.filter((c) => c.status === 'shown').length
   let fallbackFired = false
+  let isRestockFallback = false
   let fallbackDetails = null
 
   // Check if main occasion pool was completely filtered out
@@ -244,19 +295,32 @@ export function traceRdeReasoning(query, persona, cartCategories = [], completed
     fallbackFired = true
     const detectedCategory = occ.category
     const pairings = FALLBACK_PAIRINGS[detectedCategory] ?? ['Household Essentials', 'Groceries']
-    const validFallbackCategory = pairings.find(c => isZeroHistory(c, userHistory)) ??
-      CATEGORIES.find(c => isZeroHistory(c, userHistory)) ?? 'Gourmet & Imported Food'
+    const validFallbackCategory =
+      pairings.find((c) => isZeroHistory(c, userHistory)) ??
+      CATEGORIES.find((c) => isZeroHistory(c, userHistory))
 
-    const fallbackItemId = FALLBACK_ITEMS[validFallbackCategory] ?? 'bb-1'
-    fallbackDetails = `All ${occ.suggestions.length} items in ${occ.occasion} pool were filtered out (already habitual for ${persona.name}). Section 2a Fallback triggered -> ${validFallbackCategory} selected.`
+    if (validFallbackCategory) {
+      const fallbackItemId = FALLBACK_ITEMS[validFallbackCategory] ?? 'bb-1'
+      fallbackDetails = `All ${occ.suggestions.length} items in ${occ.occasion} pool were filtered out (already habitual for ${persona.name}). Section 2a Fallback triggered -> zero-history category ${validFallbackCategory} selected.`
 
-    candidates.push({
-      id: fallbackItemId,
-      item: `Fallback Item (${validFallbackCategory})`,
-      category: validFallbackCategory,
-      status: 'shown',
-      reason: `Fallback selection (${validFallbackCategory})`,
-    })
+      candidates.push({
+        id: fallbackItemId,
+        item: `Fallback Item (${validFallbackCategory})`,
+        category: validFallbackCategory,
+        status: 'shown',
+        isRestock: false,
+        badgeLabel: 'Zero-History',
+        reason: `Fallback selection (${validFallbackCategory})`,
+      })
+    } else {
+      // BOTH main occasion pool AND Section 2a fallback produced NO zero-history item!
+      // Surface "Running low on this?" habitual restock card
+      isRestockFallback = true
+      const restockCand = getRestockCandidate(habitualCategory)
+      fallbackDetails = `All occasion & Section 2a fallback categories are in ${persona.name}'s purchase history. Surfacing habitual restock ("Running low on this?") for ${habitualCategory} — excluded from discovery metrics.`
+
+      candidates.push(restockCand)
+    }
   }
 
   return {
@@ -264,6 +328,7 @@ export function traceRdeReasoning(query, persona, cartCategories = [], completed
     occasionName: occ.occasion,
     candidates,
     fallbackFired,
+    isRestockFallback,
     fallbackDetails,
   }
 }

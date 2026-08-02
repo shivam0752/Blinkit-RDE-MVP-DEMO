@@ -188,10 +188,10 @@ export default function ArchitectureScreen() {
               "Every suggestion starts with the same question: does this search or cart imply a shopping occasion Scout recognizes? If it does, candidate items are filtered down to only the categories a user has never bought from — anything they already shop for is excluded automatically.
             </p>
             <p>
-              If nothing survives that filter, Scout doesn't give up immediately — it checks one fallback category before deciding. But if even that comes up empty, Scout shows nothing at all. This is deliberate: an irrelevant suggestion does more damage to trust than no suggestion ever would.
+              If nothing survives that filter, Scout doesn't give up immediately — it checks one fallback category before deciding. If even that comes up empty of zero-history items, Scout surfaces a 'Running low on this?' card recommending a restock of the user's least-recently-reordered habitual category. This card is visually distinct, has no trust barrier lines, and is excluded from Scout's discovery metrics and NSM calculations.
             </p>
             <p>
-              Whatever does get shown is never shown once and forgotten — it's split across two moments, search and checkout, so a user gets a second, lower-pressure chance to consider it. And the moment they buy something new, that category is marked instantly, so it won't be suggested to them again."
+              Whatever does get shown is never shown once and forgotten — it's split across two moments, post-add on search/detail and checkout, so a user gets a second, lower-pressure chance to consider it. And the moment they buy something new, that category is marked instantly, so it won't be suggested to them again."
             </p>
           </div>
         </div>
@@ -309,7 +309,7 @@ export default function ArchitectureScreen() {
               </li>
               <li className="flex items-start gap-2 text-[12px] text-ink-mid leading-snug">
                 <span className="w-1.5 h-1.5 rounded-full bg-brand-green mt-1.5 flex-shrink-0" />
-                <span>Fallback shows nothing rather than an incoherent suggestion — a wrong suggestion is worse than none</span>
+                <span>Fallback never forces an unrelated category, if no genuine match exists, Scout shows a familiar restock nudge instead, kept separate from discovery metrics.</span>
               </li>
               <li className="flex items-start gap-2 text-[12px] text-ink-mid leading-snug">
                 <span className="w-1.5 h-1.5 rounded-full bg-brand-green mt-1.5 flex-shrink-0" />

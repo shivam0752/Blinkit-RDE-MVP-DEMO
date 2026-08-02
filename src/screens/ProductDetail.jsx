@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowLeft, Heart, Share2, Star, Clock3, ShieldCheck } from 'lucide-react'
 import { getProduct } from '../data/products.js'
 import { useRde } from '../context/RdeContext.jsx'
+import { useCart } from '../context/CartContext.jsx'
 import AddButton from '../components/AddButton.jsx'
 import WhyThisSheet from '../components/WhyThisSheet.jsx'
 
@@ -17,6 +18,7 @@ export default function ProductDetail() {
   const [dot, setDot] = useState(0)
   const [wishlisted, setWishlisted] = useState(false)
   const { lineFor, isNewCategory } = useRde()
+  const { items } = useCart()
   const p = getProduct(id)
 
   if (!p) return (
@@ -137,62 +139,66 @@ export default function ProductDetail() {
         </div>
       </div>
 
-      {/* ── Default-Visible Scout Reasoning Box ── */}
-      {reassuranceLine && (
-        <motion.div
-          initial={{ opacity: 0, y: 6 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mx-3 mt-2"
-        >
-          <div className="bg-brand-green-tint border border-brand-green/30 rounded-[12px] p-3.5 shadow-sm">
-            {/* Scout Trusted Header */}
-            <div className="flex items-center justify-between pb-2 border-b border-brand-green/20">
-              <div className="flex items-center gap-1.5">
-                <ShieldCheck size={16} className="text-brand-green flex-shrink-0" />
-                <span className="text-[12.5px] font-extrabold text-brand-green">Scout Trusted Recommendation</span>
+      {/* ── Scout Reasoning Box (Appears ONLY after item is added to cart) ── */}
+      <AnimatePresence>
+        {(items[p.id] ?? 0) > 0 && reassuranceLine && (
+          <motion.div
+            initial={{ opacity: 0, y: 12, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 12, scale: 0.98 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 28 }}
+            className="mx-3 mt-2"
+          >
+            <div className="bg-brand-green-tint border border-brand-green/30 rounded-[12px] p-3.5 shadow-sm">
+              {/* Scout Trusted Header */}
+              <div className="flex items-center justify-between pb-2 border-b border-brand-green/20">
+                <div className="flex items-center gap-1.5">
+                  <ShieldCheck size={16} className="text-brand-green flex-shrink-0" />
+                  <span className="text-[12.5px] font-extrabold text-brand-green">Scout Trusted Recommendation</span>
+                </div>
+                <span className="text-[9.5px] font-bold bg-brand-green text-white px-2 py-0.5 rounded-full uppercase tracking-wider">
+                  Post-Add Verified
+                </span>
               </div>
-              <span className="text-[9.5px] font-bold bg-brand-green text-white px-2 py-0.5 rounded-full">
-                Verified
-              </span>
-            </div>
 
-            {/* 2 Reasons per Section 3a */}
-            <div className="flex flex-col gap-2.5 my-2.5">
-              {/* 1. Cohort pattern line */}
-              <div className="flex items-start gap-2">
-                <span className="text-base flex-shrink-0">🧺</span>
-                <div>
-                  <p className="text-[11.5px] font-bold text-ink leading-tight">Shoppers with baskets like yours</p>
-                  <p className="text-[11px] text-ink-mid leading-snug mt-0.5">
-                    Customers who buy your regular essentials often add this product within their next few orders.
-                  </p>
+              {/* 2 Reasons per Section 3a */}
+              <div className="flex flex-col gap-2.5 my-2.5">
+                {/* 1. Cohort pattern line */}
+                <div className="flex items-start gap-2">
+                  <span className="text-base flex-shrink-0">🧺</span>
+                  <div>
+                    <p className="text-[11.5px] font-bold text-ink leading-tight">Shoppers with baskets like yours</p>
+                    <p className="text-[11px] text-ink-mid leading-snug mt-0.5">
+                      Customers who buy your regular essentials often add this product within their next few orders.
+                    </p>
+                  </div>
+                </div>
+
+                {/* 2. Category trust stat */}
+                <div className="flex items-start gap-2">
+                  <span className="text-base flex-shrink-0">🛡️</span>
+                  <div>
+                    <p className="text-[11.5px] font-bold text-ink leading-tight">Category trust & quality record</p>
+                    <p className="text-[11px] text-ink-mid leading-snug mt-0.5">
+                      {reassuranceLine}
+                    </p>
+                  </div>
                 </div>
               </div>
 
-              {/* 2. Category trust stat */}
-              <div className="flex items-start gap-2">
-                <span className="text-base flex-shrink-0">🛡️</span>
-                <div>
-                  <p className="text-[11.5px] font-bold text-ink leading-tight">Category trust & quality record</p>
-                  <p className="text-[11px] text-ink-mid leading-snug mt-0.5">
-                    {reassuranceLine}
-                  </p>
-                </div>
+              {/* De-emphasized Opt-Out Option */}
+              <div className="pt-2 border-t border-brand-green/20 text-center">
+                <button
+                  onClick={() => setShowOptOutPopup(true)}
+                  className="text-[10px] text-ink-soft hover:text-ink font-medium transition-colors cursor-pointer"
+                >
+                  Don't show me new-category suggestions
+                </button>
               </div>
             </div>
-
-            {/* De-emphasized Opt-Out Option */}
-            <div className="pt-2 border-t border-brand-green/20 text-center">
-              <button
-                onClick={() => setShowOptOutPopup(true)}
-                className="text-[10px] text-ink-soft hover:text-ink font-medium transition-colors cursor-pointer"
-              >
-                Don't show me new-category suggestions
-              </button>
-            </div>
-          </div>
-        </motion.div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* ── Highlights ── */}
       {p.highlights && (

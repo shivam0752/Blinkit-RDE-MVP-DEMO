@@ -54,7 +54,7 @@ function DashboardLayout() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.98 }}
               transition={{ duration: 0.2 }}
-              className="flex items-center justify-center gap-5 max-w-[1150px] w-full my-auto flex-wrap lg:flex-nowrap"
+              className="flex items-start justify-center gap-8 lg:gap-10 max-w-[1260px] w-full my-auto flex-wrap lg:flex-nowrap py-4"
             >
               {/* 1. Left Sidebar: Persona Selector */}
               <PersonaSidebar />
