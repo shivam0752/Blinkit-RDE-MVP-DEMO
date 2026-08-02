@@ -134,7 +134,7 @@ export default function ArchitectureScreen() {
                 <span>Fallback Logic</span>
               </div>
               <p className="text-[11.5px] text-ink-mid leading-relaxed">
-                If nothing genuinely relevant was precomputed for a user, this decides the outcome — surface something coherent from a related category, or show nothing at all. An incoherent suggestion is never allowed.
+                If nothing genuinely relevant was precomputed for a user, this decides the outcome — surface something coherent from a related category. An incoherent suggestion is never allowed.
               </p>
             </div>
 
