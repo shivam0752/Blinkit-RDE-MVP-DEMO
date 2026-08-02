@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion'
-import { Cpu, CheckCircle2, AlertCircle, Rocket, Layers, ShieldCheck, Database, RefreshCw, Zap, Award, Sparkles, Server, Filter, Activity } from 'lucide-react'
+import { Cpu, CheckCircle2, AlertCircle, Rocket, Layers, ShieldCheck, Database, RefreshCw, Zap, Award, Sparkles, Server, Filter, Activity, Workflow } from 'lucide-react'
 import { DEFAULT_MERMAID_CODE } from '../data/mermaidCode.js'
 import MermaidViewer from '../components/MermaidViewer.jsx'
+import ScoutDecisionFlow from '../components/ScoutDecisionFlow.jsx'
 
 export default function ArchitectureScreen() {
   return (
@@ -158,6 +159,40 @@ export default function ArchitectureScreen() {
                 The Lookup Service serves exactly two entry points — Search Results and Cart Review — which lead into Product Detail and Order Confirmation respectively, both converging at Order Confirmation once a purchase completes.
               </p>
             </div>
+          </div>
+        </div>
+
+        {/* ── Block 1.5: How Scout decides what to show ── */}
+        <div className="bg-surface rounded-[16px] border border-line p-5 lg:p-6 shadow-sm flex flex-col gap-5">
+          <div className="flex items-center gap-2 border-b border-line pb-3">
+            <Workflow size={20} className="text-brand-green" />
+            <div>
+              <h2 className="text-[17px] font-extrabold text-ink leading-tight">How Scout decides what to show</h2>
+              <p className="text-[12.5px] font-semibold text-ink-mid mt-0.5">
+                The logic behind every suggestion — and why sometimes there isn't one
+              </p>
+            </div>
+          </div>
+
+          {/* Intro text (place above the diagram) */}
+          <div className="p-4 bg-[#f6f3f2] rounded-[12px] border border-line text-[13px] text-ink leading-relaxed font-normal">
+            "The architecture above shows what Scout is built from. This shows what it actually does with it — the exact sequence of checks that runs every time a user searches or reaches checkout, before a single suggestion ever appears on screen."
+          </div>
+
+          {/* Diagram goes here */}
+          <ScoutDecisionFlow />
+
+          {/* Explanation text (place below the diagram) */}
+          <div className="flex flex-col gap-3 p-4.5 bg-[#fbf9f8] rounded-[12px] border border-line text-[13px] text-ink-mid leading-relaxed">
+            <p>
+              "Every suggestion starts with the same question: does this search or cart imply a shopping occasion Scout recognizes? If it does, candidate items are filtered down to only the categories a user has never bought from — anything they already shop for is excluded automatically.
+            </p>
+            <p>
+              If nothing survives that filter, Scout doesn't give up immediately — it checks one fallback category before deciding. But if even that comes up empty, Scout shows nothing at all. This is deliberate: an irrelevant suggestion does more damage to trust than no suggestion ever would.
+            </p>
+            <p>
+              Whatever does get shown is never shown once and forgotten — it's split across two moments, search and checkout, so a user gets a second, lower-pressure chance to consider it. And the moment they buy something new, that category is marked instantly, so it won't be suggested to them again."
+            </p>
           </div>
         </div>
 
