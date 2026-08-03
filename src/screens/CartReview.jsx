@@ -42,8 +42,19 @@ function CartRow({ id, qty }) {
 }
 
 function SuggestCard({ p, teaser }) {
+  const navigate = useNavigate()
+  const { recordItemClick } = useRde()
+
+  const handleCardClick = () => {
+    if (recordItemClick) recordItemClick(p.id)
+    navigate(`/product/${p.id}`)
+  }
+
   return (
-    <div className="flex-shrink-0 w-36 bg-surface rounded-[10px] border border-line overflow-hidden flex flex-col shadow-sm">
+    <div
+      onClick={handleCardClick}
+      className="flex-shrink-0 w-36 bg-surface rounded-[10px] border border-line overflow-hidden flex flex-col shadow-sm cursor-pointer hover:shadow-md transition-shadow"
+    >
       <div
         className="h-24 flex items-center justify-center text-4xl"
         style={{ background: p.tint }}

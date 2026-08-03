@@ -27,7 +27,7 @@ export default function ProductDetail() {
     </div>
   )
 
-  const reassuranceLine = isNewCategory(p.category) ? lineFor(p.category) : null
+  const reassuranceLine = lineFor(p.category)
   const discountPct = p.mrp > p.price ? Math.round(((p.mrp - p.price) / p.mrp) * 100) : null
 
   return (
@@ -139,9 +139,9 @@ export default function ProductDetail() {
         </div>
       </div>
 
-      {/* ── Scout Reasoning Box (Appears ONLY after item is added to cart) ── */}
+      {/* ── Scout Reasoning Box ── */}
       <AnimatePresence>
-        {(items[p.id] ?? 0) > 0 && reassuranceLine && (
+        {reassuranceLine && (
           <motion.div
             initial={{ opacity: 0, y: 12, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -156,8 +156,8 @@ export default function ProductDetail() {
                   <ShieldCheck size={16} className="text-brand-green flex-shrink-0" />
                   <span className="text-[12.5px] font-extrabold text-brand-green">Scout Trusted Recommendation</span>
                 </div>
-                <span className="text-[9.5px] font-bold bg-brand-green text-white px-2 py-0.5 rounded-full uppercase tracking-wider">
-                  Post-Add Verified
+                <span className="text-[9.5px] font-bold bg-brand-green text-white px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                  {(items[p.id] ?? 0) > 0 ? 'Post-Add Verified' : 'Verified'}
                 </span>
               </div>
 

@@ -55,7 +55,7 @@ const FILTER_LABELS = ['Filters', 'Sort', 'Diet Pref', 'Brand']
 
 export default function SearchResults() {
   const navigate = useNavigate()
-  const { searchQuery, getZeroHistoryOccasionPool, lineFor, getTrace } = useRde()
+  const { searchQuery, getZeroHistoryOccasionPool, lineFor, getTrace, recordItemClick } = useRde()
   const { items } = useCart()
   const [activeCat, setActiveCat] = useState('all')
   const [activeFilter, setActiveFilter] = useState(null)
@@ -245,7 +245,11 @@ export default function SearchResults() {
                         {searchSuggestions.map((p) => (
                           <div
                             key={p.id}
-                            className={`w-[155px] flex-shrink-0 bg-surface-alt rounded-[12px] p-2.5 border flex flex-col justify-between shadow-xs ${
+                            onClick={() => {
+                              if (recordItemClick) recordItemClick(p.id)
+                              navigate(`/product/${p.id}`)
+                            }}
+                            className={`w-[155px] flex-shrink-0 bg-surface-alt rounded-[12px] p-2.5 border flex flex-col justify-between shadow-xs cursor-pointer hover:shadow-md transition-shadow ${
                               p.isRestock ? 'border-amber-500/30' : 'border-brand-green/30'
                             }`}
                           >
