@@ -3,6 +3,7 @@ import { createContext, useContext, useState, useMemo, useEffect } from 'react'
 import {
   PERSONAS,
   BARRIER_LINES,
+  getProductTrustLine,
   isZeroHistory,
   traceRdeReasoning,
   SEARCH_CATEGORY_MAP,
@@ -104,7 +105,7 @@ export function RdeProvider({ children }) {
     setClickedItemIds((prev) => new Set([...prev, id]))
   }
 
-  const lineFor = (category) => BARRIER_LINES[category]?.template ?? null
+  const lineFor = (category, productOrId) => getProductTrustLine(category, productOrId)
 
   return (
     <RdeContext.Provider

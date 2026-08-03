@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X } from 'lucide-react'
 
+import { useRde } from '../context/RdeContext.jsx'
+
 // Helper to derive return/complaint trust sentence (varying per product)
 function getReturnTrustInfo(product) {
   if (!product) return { months: 6, complaints: 0, text: 'This product has 0 returns / complaints in the last 6 months.' }
@@ -32,6 +34,7 @@ function getReturnTrustInfo(product) {
 // Screen 6 — Trust transparency: "Why this" bottom sheet
 export default function WhyThisSheet({ product, open, onClose }) {
   const [showOptOutPopup, setShowOptOutPopup] = useState(false)
+  const { lineFor } = useRde() || {}
 
   const handleCloseAll = () => {
     setShowOptOutPopup(false)
@@ -39,6 +42,7 @@ export default function WhyThisSheet({ product, open, onClose }) {
   }
 
   const trustInfo = getReturnTrustInfo(product)
+  const categoryTrustLine = (product && lineFor && lineFor(product.category)) || trustInfo.text
 
   return (
     <AnimatePresence>
@@ -96,12 +100,12 @@ export default function WhyThisSheet({ product, open, onClose }) {
                     {
                       icon: '🧺',
                       title: 'Based on baskets like yours',
-                      desc: `Shoppers who buy whole wheat bread, milk, and eggs often add this within their next few orders.`,
+                      desc: `Shoppers who buy regular essentials often add this within their next few orders.`,
                     },
                     {
                       icon: '🛡️',
                       title: 'Category trust & quality record',
-                      desc: 'Zero complaints in this category over the past 6 months.',
+                      desc: categoryTrustLine,
                     },
                   ].map((item, i) => (
                     <motion.li

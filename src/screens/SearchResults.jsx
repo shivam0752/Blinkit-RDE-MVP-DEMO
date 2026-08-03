@@ -267,9 +267,9 @@ export default function SearchResults() {
                               <p className="text-[10px] text-ink-soft mt-0.5">{p.qty}</p>
 
                               {/* No trust line for restock items */}
-                              {!p.noTrustLine && lineFor(p.category) && (
+                              {!p.noTrustLine && lineFor(p.category, p) && (
                                 <p className="text-[9px] text-brand-green font-semibold leading-tight mt-1.5 bg-brand-green-tint p-1 rounded-[6px] border border-brand-green/20">
-                                  🛡️ {lineFor(p.category)}
+                                  🛡️ {lineFor(p.category, p)}
                                 </p>
                               )}
                             </div>

@@ -151,7 +151,7 @@ export const FALLBACK_ITEMS = {
 export const BARRIER_LINES = {
   'Pet Supplies': {
     barrier: 'trust_deficit',
-    template: 'Zero complaints in past 6 months: 7-day return policy for unopened items.',
+    template: 'Only 1 return in past 1 year: 7-day return policy for unopened items.',
   },
   'Snacks & Beverages': {
     barrier: 'quality_assurance',
@@ -159,28 +159,76 @@ export const BARRIER_LINES = {
   },
   'Baby Products': {
     barrier: 'authenticity_concern',
-    template: 'Sealed & verified at source: zero complaints in past 6 months.',
+    template: 'Sealed & verified at source: 0 complaints in past 6 months.',
   },
   'Gourmet & Imported Food': {
     barrier: 'assortment_uncertainty',
-    template: 'Zero complaints in past 3 months: small-batch fresh quality guarantee.',
+    template: 'Under 0.1% return rate in past 1 year: small-batch fresh quality guarantee.',
   },
   'Household Essentials': {
     barrier: 'quality_assurance',
-    template: 'Zero complaints in past 6 months: authentic quality & 3-day return policy.',
+    template: 'Only 3 returns in past 1 year: authentic quality & 3-day return policy.',
   },
   'Electronics & Accessories': {
     barrier: 'authenticity_concern',
-    template: 'Tamper-proof sealed: zero complaints & 7-day replacement guarantee.',
+    template: 'Tamper-proof sealed: 0 defect complaints & 7-day replacement guarantee.',
   },
   'Personal Care & Beauty': {
     barrier: 'authenticity_concern',
-    template: 'Zero complaints in past 6 months: 100% authentic brand warranty included.',
+    template: 'Zero complaints in past 30 days: 100% authentic brand warranty included.',
   },
   Groceries: {
     barrier: 'quality_doubt',
-    template: 'Zero complaints in past 6 months: freshness guaranteed with instant replacement.',
+    template: 'Only 2 complaints in past 1 year: freshness guaranteed with instant replacement.',
   },
+}
+
+export const PRODUCT_TRUST_LINES = {
+  'gf-1': 'Zero complaints in past 3 months: small-batch fresh quality guarantee.',
+  'gf-2': 'Under 0.1% return rate in past 1 year: 100% natural fruit spread.',
+  'sn-1': 'Only 2 complaints in past 6 months: fresh stock & express 8-min delivery.',
+  'ps-1': 'Only 1 return in past 1 year: 7-day return policy for unopened items.',
+  'dp-1': '0 complaints in past 6 months: sealed & verified at source.',
+  'dp-2': 'Only 2 returns in past 1 year: hypoallergenic & dermatologist tested.',
+  'dp-3': 'Zero leakage complaints in past 90 days: extra absorbent core.',
+  'sk-1': 'Only 3 returns in past 2 years: lifetime manufacturer warranty included.',
+  'ch-1': 'Zero complaints in past 30 days: fresh crispness & nitrogen sealed.',
+  'sh-1': 'Only 4 returns in past 1 year: 100% authentic brand warranty included.',
+  'cg-1': '0 defect complaints in past 6 months: tamper-proof sealed adapter.',
+  'br-1': 'Only 2 complaints in past 1 year: freshness guaranteed with instant replacement.',
+  'br-2': 'Habitual pick: 0 quality returns in past 6 months.',
+}
+
+const TRUST_VARIATIONS = [
+  'Zero complaints in past 3 months: small-batch fresh quality guarantee.',
+  'Under 0.1% return rate in past 1 year: 100% natural quality guaranteed.',
+  'Only 2 complaints in past 6 months: fresh stock & 8-min express delivery.',
+  'Only 1 return in past 1 year: hassle-free 7-day replacement policy.',
+  'Sealed & verified at source: 0 complaints in past 9 months.',
+  'Fewer than 3 returns in past 1 year: authentic quality & instant replacement.',
+  '0 defect reports in past 2 years: 100% genuine brand warranty included.',
+  'Zero complaints in past 30 days: temperature-controlled fresh stock.',
+  'Under 0.2% return rate in past 6 months: source-verified & tamper-evident.',
+]
+
+export function getProductTrustLine(category, productOrId) {
+  const productId = typeof productOrId === 'object' ? productOrId?.id : productOrId
+
+  if (productId && PRODUCT_TRUST_LINES[productId]) {
+    return PRODUCT_TRUST_LINES[productId]
+  }
+
+  if (productId) {
+    let hash = 0
+    for (let i = 0; i < productId.length; i++) {
+      hash = (hash << 5) - hash + productId.charCodeAt(i)
+      hash |= 0
+    }
+    const idx = Math.abs(hash) % TRUST_VARIATIONS.length
+    return TRUST_VARIATIONS[idx]
+  }
+
+  return BARRIER_LINES[category]?.template ?? TRUST_VARIATIONS[0]
 }
 
 export const SEARCH_CATEGORY_MAP = {

@@ -27,7 +27,8 @@ export default function ProductDetail() {
     </div>
   )
 
-  const reassuranceLine = lineFor(p.category)
+  const isScoutRecommendation = isNewCategory(p.category)
+  const reassuranceLine = isScoutRecommendation ? lineFor(p.category, p) : null
   const discountPct = p.mrp > p.price ? Math.round(((p.mrp - p.price) / p.mrp) * 100) : null
 
   return (
