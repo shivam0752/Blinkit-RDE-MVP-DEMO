@@ -43,8 +43,13 @@ export function CartProvider({ children }) {
     0,
   )
 
+  const clear = useCallback(() => {
+    setItems({})
+    setToast(null)
+  }, [])
+
   return (
-    <CartContext.Provider value={{ items, add, remove, count, total, toast }}>
+    <CartContext.Provider value={{ items, add, remove, count, total, toast, clear }}>
       {children}
     </CartContext.Provider>
   )

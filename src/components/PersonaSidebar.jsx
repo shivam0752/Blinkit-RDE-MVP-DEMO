@@ -1,10 +1,13 @@
-// PersonaSidebar — Left Sidebar for Persona Selection (Section 7)
+import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { UserCheck, Tag, CheckCircle2 } from 'lucide-react'
 import { useRde } from '../context/RdeContext.jsx'
+import { useCart } from '../context/CartContext.jsx'
 
 export default function PersonaSidebar() {
-  const { personas, activePersona, setActivePersonaId } = useRde()
+  const navigate = useNavigate()
+  const { clear } = useCart()
+  const { personas, activePersona, setActivePersonaId, setSearchQuery } = useRde()
 
   return (
     <div className="w-[300px] h-[720px] max-h-[calc(100vh-48px)] bg-surface rounded-[22px] p-4.5 border border-line shadow-card flex flex-col gap-4 flex-shrink-0 self-center overflow-y-auto scrollbar-hide">
@@ -31,7 +34,12 @@ export default function PersonaSidebar() {
             <motion.button
               key={p.id}
               whileTap={{ scale: 0.97 }}
-              onClick={() => setActivePersonaId(p.id)}
+              onClick={() => {
+                setActivePersonaId(p.id)
+                clear()
+                setSearchQuery('bread')
+                navigate('/search')
+              }}
               className={`p-3.5 rounded-[14px] border text-left transition-all relative overflow-hidden ${
                 isActive
                   ? 'border-brand-green bg-brand-green-tint/30 ring-4 ring-brand-green/10 shadow-sm'
