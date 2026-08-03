@@ -3,6 +3,8 @@
 // Source of truth: RDE Specification.md (Updated Sections 2, 7, 7a, 7b)
 // ══════════════════════════════════════════════════════════════════
 
+import { occasionSuggestions, bakeryProducts } from '../data/products.js'
+
 export const CATEGORIES = [
   'Groceries',
   'Snacks & Beverages',
@@ -196,10 +198,13 @@ export function isZeroHistory(category, purchaseHistory) {
 }
 
 // Trace reasoning for the right-side Live Scout Insight Panel (Section 5)
-export function traceRdeReasoning(query, persona, cartCategories = [], completedOrders = []) {
+export function traceRdeReasoning(query, persona, cartCategories = [], completedOrders = [], hasUnlockedNewCategoryThisMonth = false) {
   const norm = query.toLowerCase().trim()
   const occ = OCCASION_MAP[norm]
-  const userHistory = [...persona.purchaseHistory, ...cartCategories, ...completedOrders]
+  // Cart contents are deliberately EXCLUDED from history here: adding a suggested
+  // item must not flip it to "filtered" (which would exhaust the pool and cascade
+  // into a fresh, often irrelevant zero-history pick). Only completed purchases count.
+  const userHistory = [...persona.purchaseHistory, ...completedOrders]
 
   // Least-recently-reordered habitual category from user purchase history
   const habitualCategory = persona.purchaseHistory[0] ?? 'Groceries'
@@ -228,6 +233,23 @@ export function traceRdeReasoning(query, persona, cartCategories = [], completed
       reason: `Habitual restock for ${cat} (Excluded from Scout discovery metrics)`,
       noTrustLine: true,
       excludeFromMetrics: true,
+    }
+  }
+
+  // Monthly cadence cap: 1 new-category unlock per user per mocked month.
+  // Fires only once a new-category purchase has been COMPLETED this mocked month.
+  // Items merely sitting in the cart do not trip the cap — the recommendation
+  // card keeps showing the same suggestions even after they are added.
+  if (hasUnlockedNewCategoryThisMonth) {
+    const restockCand = getRestockCandidate(habitualCategory)
+    return {
+      query: norm,
+      occasionName: occ ? occ.occasion : `General Search (${norm})`,
+      candidates: [restockCand],
+      fallbackFired: true,
+      isRestockFallback: true,
+      monthlyCapReached: true,
+      fallbackDetails: `Monthly cadence cap active: 1 new-category purchase already completed this mocked month. Suppressing further zero-history recommendations and surfacing habitual restock ("Running low on this?") for ${habitualCategory}.`,
     }
   }
 

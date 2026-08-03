@@ -128,11 +128,10 @@ export default function SearchResults() {
               <button
                 key={cat.id}
                 onClick={() => setActiveCat(cat.id)}
-                className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold whitespace-nowrap transition-all border ${
-                  isSelected
+                className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold whitespace-nowrap transition-all border ${isSelected
                     ? 'bg-brand-green-tint text-brand-green border-brand-green'
                     : 'bg-surface-alt text-ink-mid border-line'
-                }`}
+                  }`}
               >
                 <span>{cat.emoji}</span>
                 <span>{cat.label}</span>
@@ -148,11 +147,10 @@ export default function SearchResults() {
               key={f}
               whileTap={{ scale: 0.94 }}
               onClick={() => setActiveFilter(activeFilter === f ? null : f)}
-              className={`flex items-center gap-1 px-2.5 py-1 rounded-full border text-[11px] font-bold flex-shrink-0 transition-colors ${
-                activeFilter === f
+              className={`flex items-center gap-1 px-2.5 py-1 rounded-full border text-[11px] font-bold flex-shrink-0 transition-colors ${activeFilter === f
                   ? 'border-brand-green bg-brand-green-tint text-brand-green'
                   : 'border-line bg-surface text-ink-mid'
-              }`}
+                }`}
             >
               {i === 0 && <SlidersHorizontal size={10} />}
               {i === 1 && <ArrowUpDown size={10} />}
@@ -190,19 +188,17 @@ export default function SearchResults() {
                       animate={{ opacity: 1, height: 'auto', scale: 1 }}
                       exit={{ opacity: 0, height: 0, scale: 0.95 }}
                       transition={{ type: 'spring', stiffness: 420, damping: 28 }}
-                      className={`col-span-2 my-1 bg-surface border-2 rounded-[16px] p-3.5 shadow-lg flex flex-col gap-3 z-20 overflow-hidden ${
-                        trace.isRestockFallback
+                      className={`col-span-2 my-1 bg-surface border-2 rounded-[16px] p-3.5 shadow-lg flex flex-col gap-3 z-20 overflow-hidden ${trace.isRestockFallback
                           ? 'border-amber-500/60 bg-amber-500/5'
                           : 'border-brand-green'
-                      }`}
+                        }`}
                     >
                       {/* Header / Badge */}
                       <div className="flex items-center justify-between pb-2 border-b border-line">
                         <div className="flex items-center gap-2">
                           <div
-                            className={`w-7 h-7 rounded-full text-white flex items-center justify-center text-[13px] font-bold shadow-xs ${
-                              trace.isRestockFallback ? 'bg-amber-600' : 'bg-brand-green'
-                            }`}
+                            className={`w-7 h-7 rounded-full text-white flex items-center justify-center text-[13px] font-bold shadow-xs ${trace.isRestockFallback ? 'bg-amber-600' : 'bg-brand-green'
+                              }`}
                           >
                             {trace.isRestockFallback ? '🔄' : '⚡'}
                           </div>
@@ -213,9 +209,8 @@ export default function SearchResults() {
                                 : 'Item Added! Scout Recommendations'}
                             </p>
                             <p
-                              className={`text-[10px] font-extrabold mt-0.5 ${
-                                trace.isRestockFallback ? 'text-amber-700' : 'text-brand-green'
-                              }`}
+                              className={`text-[10px] font-extrabold mt-0.5 ${trace.isRestockFallback ? 'text-amber-700' : 'text-brand-green'
+                                }`}
                             >
                               {trace.isRestockFallback
                                 ? 'Habitual Category Restock'
@@ -224,11 +219,10 @@ export default function SearchResults() {
                           </div>
                         </div>
                         <span
-                          className={`text-[9.5px] font-bold border px-2.5 py-0.5 rounded-full uppercase tracking-wider ${
-                            trace.isRestockFallback
+                          className={`text-[9.5px] font-bold border px-2.5 py-0.5 rounded-full uppercase tracking-wider ${trace.isRestockFallback
                               ? 'bg-amber-500/10 text-amber-700 border-amber-500/30'
                               : 'bg-brand-green-tint text-brand-green border-brand-green/30'
-                          }`}
+                            }`}
                         >
                           {trace.isRestockFallback ? 'Restock State' : 'Immediate Row Suggestion'}
                         </span>
@@ -249,9 +243,8 @@ export default function SearchResults() {
                               if (recordItemClick) recordItemClick(p.id)
                               navigate(`/product/${p.id}`)
                             }}
-                            className={`w-[155px] flex-shrink-0 bg-surface-alt rounded-[12px] p-2.5 border flex flex-col justify-between shadow-xs cursor-pointer hover:shadow-md transition-shadow ${
-                              p.isRestock ? 'border-amber-500/30' : 'border-brand-green/30'
-                            }`}
+                            className={`w-[155px] flex-shrink-0 bg-surface-alt rounded-[12px] p-2.5 border flex flex-col justify-between shadow-xs cursor-pointer hover:shadow-md transition-shadow ${p.isRestock ? 'border-amber-500/30' : 'border-brand-green/30'
+                              }`}
                           >
                             <div>
                               <div
@@ -261,11 +254,10 @@ export default function SearchResults() {
                                 {p.emoji}
                               </div>
                               <span
-                                className={`text-[8.5px] font-bold px-1.5 py-0.5 rounded uppercase tracking-wide ${
-                                  p.isRestock
+                                className={`text-[8.5px] font-bold px-1.5 py-0.5 rounded uppercase tracking-wide ${p.isRestock
                                     ? 'bg-amber-500/15 text-amber-800'
                                     : 'bg-brand-green-tint text-brand-green'
-                                }`}
+                                  }`}
                               >
                                 {p.badgeLabel ?? (p.isRestock ? 'Running low on this?' : 'Zero-History')}
                               </span>
