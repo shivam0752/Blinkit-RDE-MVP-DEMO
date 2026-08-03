@@ -360,27 +360,27 @@ export default function ArchitectureScreen() {
             <h2 className="text-[15px] font-bold text-ink">Future Scope</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 pt-1">
-            <div className="bg-accent-blue-tint/40 p-3.5 rounded-[12px] border border-accent-blue/20 flex flex-col gap-1.5">
+            <div className="bg-accent-blue-tint/40 p-4 rounded-[12px] border border-accent-blue/20 flex flex-col gap-2">
               <span className="text-[11px] font-extrabold text-accent-blue uppercase tracking-wider">Phase 2</span>
-              <p className="text-[12.5px] text-ink font-bold leading-tight">Phase 2</p>
+              <p className="text-[13px] text-ink font-bold leading-tight">Phase 2: Life-Event Detection</p>
               <p className="text-[11.5px] text-ink-mid leading-relaxed">
-                Phase 2: life-event and pattern-change detection
+                Right now, Scout only reacts to what a user is actively doing — searching or checking out. Phase 2 adds a second layer: detecting meaningful shifts in someone's order pattern that signal a real life change, even before they search for anything related to it. Examples: a first-ever baby product order suggesting a new parent, a sudden jump in order frequency or size suggesting a household change, a new delivery address suggesting a move. Once detected, Scout proactively surfaces the next logically relevant category tied to that life event — timed appropriately, not immediately, so it doesn't feel intrusive. This still runs on the same weekly batch cycle as Phase 1; it's an additional signal feeding the same reasoning job, not a new system.
               </p>
             </div>
 
-            <div className="bg-brand-green-tint/40 p-3.5 rounded-[12px] border border-brand-green/20 flex flex-col gap-1.5">
+            <div className="bg-brand-green-tint/40 p-4 rounded-[12px] border border-brand-green/20 flex flex-col gap-2">
               <span className="text-[11px] font-extrabold text-brand-green uppercase tracking-wider">Phase 3</span>
-              <p className="text-[12.5px] text-ink font-bold leading-tight">Phase 3</p>
+              <p className="text-[13px] text-ink font-bold leading-tight">Phase 3: Feedback-Loop Tuning</p>
               <p className="text-[11.5px] text-ink-mid leading-relaxed">
-                Phase 3: feedback-loop tuning based on accept/ignore signals
+                Phase 1 and 2 both generate suggestions from fixed logic — occasion tables, zero-history filters, fallback rules. None of that logic currently learns from whether its own suggestions actually worked. Phase 3 closes that gap: real signals (was a suggestion shown, clicked, added to cart, or ignored/opted out) get fed back into the next week's reasoning job, so the system gradually gets better at knowing which occasion-to-category pairings actually convert for which kind of user, rather than relying on the same fixed rules indefinitely. This is where Scout stops being a static rules engine and starts becoming a genuinely adaptive one — but only after Phase 1 and 2 have generated enough real interaction data to learn from.
               </p>
             </div>
 
-            <div className="bg-brand-yellow-tint/40 p-3.5 rounded-[12px] border border-brand-yellow-deep/20 flex flex-col gap-1.5">
+            <div className="bg-brand-yellow-tint/40 p-4 rounded-[12px] border border-brand-yellow-deep/20 flex flex-col gap-2">
               <span className="text-[11px] font-extrabold text-brand-yellow-deep uppercase tracking-wider">Production</span>
-              <p className="text-[12.5px] text-ink font-bold leading-tight">Full Production Integration</p>
+              <p className="text-[13px] text-ink font-bold leading-tight">Full Production Integration</p>
               <p className="text-[11.5px] text-ink-mid leading-relaxed">
-                Full production integration — replacing mocked data with live Blinkit systems
+                Everything built so far runs on mocked data — a fixed set of demo personas, a hand-curated occasion table, simulated purchase histories. This phase is the switch from simulation to reality: connecting Scout to Blinkit's actual Order History DB and Product Catalog DB (the same systems shown in the architecture diagram), so suggestions are generated from real user behavior and real, current inventory instead of a fixed demo dataset. Critically, this doesn't change Scout's underlying logic at all — the occasion matching, zero-history filtering, fallback rules, and weekly batch cadence all stay exactly the same. Only the data source changes, from mocked to live.
               </p>
             </div>
           </div>
